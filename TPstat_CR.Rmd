@@ -1,0 +1,368 @@
+---
+title: "TP Statistique"
+author: "Cédric Milinaire, Corentin Laharotte"
+date: "4 avril 2020"
+output:
+  html_document:
+    df_print: paged
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+## il est possible qu'avant d'installer le package TSPpackage vous deviez installer ou ré-installer Rcpp
+#install.packages('Rcpp')
+
+# install.packages('./TSPpackage_1.0.tar.gz',repos=NULL,type='bin') ## pour linux
+# install.packages('./TSPpackage_1.0.zip',repos=NULL,type='bin')    ## pour windows
+## je ne peux pas fournir de package pour mac...
+
+## Appels aux packages, après les avoir installés !
+library(sp)
+library(maps)
+library(microbenchmark)
+library(TSP)
+library(TSPpackage)
+
+# fixe la graine
+set.seed(150)
+```
+Voici le plan de ce qui sera fait dans le TP.
+
+# 0. Visualisation de chemins
+
+Lecture du fichier des villes :
+
+```{r, echo=TRUE}
+villes <- read.csv('DonneesGPSvilles.csv',header=TRUE,dec='.',sep=';',quote="\"")
+str(villes)
+```
+Représentation des chemins par plus proches voisins et du chemin optimal :
+```{r, echo=TRUE}
+coord <- cbind(villes$longitude,villes$latitude)
+dist <- distanceGPS(coord)
+voisins <- TSPnearest(dist)
+
+pathOpt <- c(1,8,9,4,21,13,7,10,3,17,16,20,6,19,15,18,11,5,22,14,12,2)
+
+par(mfrow=c(1,2),mar=c(1,1,2,1))
+plotTrace(coord[voisins$chemin,], title='Plus proches voisins')
+plotTrace(coord[pathOpt,], title='Chemin optimal')
+```
+
+
+Les longueurs des trajets (à vol d'oiseau) valent respectivement, pour la méthode des plus proches voisins :
+```{r, echo=FALSE}
+voisins$longueur
+```
+et pour la méthode optimale :
+```{r, echo=FALSE}
+calculeLongueur(dist,pathOpt)
+```
+
+Ceci illustre bien l'intérêt d'un algorithme de voyageur de commerce. Nous allons dans la suite étudier les performances de cet algorithme.
+
+
+# 1. Comparaison d'algorithmes
+
+Nombre de sommets fixes et graphes "identiques".
+
+```{r, echo=TRUE}
+      n <- 10
+sommets <- data.frame(x = runif(n), y = runif(n))
+  couts <- distance(sommets)
+```
+
+## 1.1. Longueur des chemins
+
+Comparaison des longueurs de différentes méthodes : 
+
+   * boxplots
+   
+```{r, echo=FALSE}
+cheminRepetitive <- vector()
+cheminNearestIns <- vector()
+chemin2Opt <- vector()
+cheminNearest <- vector()
+cheminBranch <- vector()
+
+for (i in 1:50){
+  # Généreation de graphe aléatoire
+  n <- 10
+  sommets <- data.frame(x = runif(n), y = runif(n))
+  couts <- distance(sommets)
+  
+  # methode repetitive
+  cheminRepetitive<-c(cheminRepetitive, TSPsolve(couts,"repetitive_nn"))
+  #methode nearest insertion
+  cheminNearestIns<-c(cheminNearestIns, TSPsolve(couts,"nearest_insertion"))
+  #methode two Opt 
+  chemin2Opt<-c(chemin2Opt, TSPsolve(couts,"two_opt"))
+  #methode nearest 
+  cheminNearest<-c(cheminNearest, TSPsolve(couts,"nearest"))
+  #methode branch
+  cheminBranch<-c(cheminBranch, TSPsolve(couts,"branch"))
+}
+
+boxplot(cheminRepetitive,cheminNearestIns,chemin2Opt,cheminNearest,cheminBranch,
+        main="longueur des chemins hamiltoniens donnés par 5 méthodes",
+        names=c("repetitive_nn","nearest_insertion", "two_opt", "nearest", "branch"),
+        cex.axis=0.7299
+        )
+```
+
+   * test entre 'nearest' et 'branch'
+ 
+ On souhaite comparer les méthodes des plus proches voisins et Branch&Bound.
+ On réalise le test sur l'espérance :
+  (H0) m_nn - m_b <= 0 <=> m_nn<=m_b
+  (H1) m_nn - m_b > 0 <=> m_nn>m_b
+  
+Région critique à 5% :
+  {T > t_n-1;2a}
+  
+```{r, echo=FALSE}
+n<-50
+m_nn<-mean(cheminNearest)
+s_nn<-var(cheminNearest)
+m_b<-mean(cheminBranch)
+
+# risque = 5%
+a<-0.05
+T<-(m_nn-m_b)/(sqrt(s_nn/n))
+t_a= qt(1-a/2,n-1)
+```
+T =
+```{r, echo=FALSE}
+print(T)
+```
+t_a =
+```{r, echo=FALSE}
+print(t_a)
+```
+```{r, echo=FALSE}
+if(T>t_a){
+  print("T > t_a")
+  print("On peut rejeter H0")
+} else {
+   print("T <= t_a")
+   print("On ne peut pas rejeter H0")
+}
+```
+On peut rejeter H0, et affirmer avec un risque de 5% que les chemins des plus proches voisins sont en moyenne plus long que ceux de Branch&Bound.
+
+(Pour celui là je suis pas sûr que ce soit cette méthode qu'il faille utiliser !)
+
+Vérification
+
+```{r, echo=TRUE}
+t <- t.test(cheminNearest,mu=mean(cheminBranch) ,alternative = "greater") #alternative = "greater" pour H1 m > m0
+print(t)
+```
+On peut aussi faire t.test(cheminNearest, cheminBranch,alternative = "greater")
+
+   * tests 2 à 2 
+
+Ici (H0) mi=mj
+(H1) mi!=mj
+  
+```{r, echo=FALSE}
+methodsRepetitive <- vector()
+methodsNearestIns <- vector()
+methods2Opt <- vector()
+methodsNearest <- vector()
+methodsBranch <- vector()
+
+for (i in 1:50){
+  methodsRepetitive<-c(methodsRepetitive, "repetitive_nn")
+  methodsNearestIns<-c(methodsNearestIns, "nearest_insertion")
+  methods2Opt<-c(methods2Opt, "two_opt")
+  methodsNearest<-c(methodsNearest, "nearest")
+  methodsBranch<-c(methodsBranch, "branch")
+}
+methods<-c(methodsRepetitive, methodsNearestIns, methods2Opt, methodsNearest, methodsBranch)
+results<-c(cheminRepetitive, cheminNearestIns, chemin2Opt, cheminNearest, cheminBranch)
+
+#test
+pairwise.t.test(results,methods,adjust.method="bonferroni")
+```
+A COMMENTER 
+
+Si on accepte de se tromper de alpha=5%, on rejette H0 si la pvaleur de (i,j) est inférieure à alpha/10 (vu dans l'énoncé donc 0.05).
+? pas sûr de ça !
+
+## 1.2. Temps de calcul
+
+Comparaison des temps à l'aide du package microbenchmark.
+
+Application de microbenchmark :
+
+```{r, echo=FALSE}
+microbenchmark(TSPsolve(couts,"repetitive_nn"), TSPsolve(couts,"nearest_insertion"), TSPsolve(couts,"two_opt"), TSPsolve(couts,"nearest"), TSPsolve(couts,"branch"), 
+               times=20, 
+               setup={
+                 n <- 10
+                 sommets <- data.frame(x = runif(n), y = runif(n))
+                 couts <- distance(sommets)
+                }
+            )
+```
+# 2. Etude de la complexité de l'algorithme Branch and Bound
+
+```{r, echo=FALSE}
+n <- 10
+sommets <- data.frame(x = runif(n), y = runif(n))
+couts <- distance(sommets)
+```
+
+## 2.1. Comportement par rapport au nombre de sommets : premier modèle
+
+```{r, echo=FALSE}
+seqn <- seq(4,20,1)
+
+temps<-matrix(, nrow = 17, ncol = 10)
+for (i in 1:17){
+  temps[i,]<-microbenchmark(TSPsolve(couts, method = "branch"),
+                            times = 10,
+                            setup = { n <- seqn[i]
+                            couts <- distance(cbind(x = runif(n), y = runif(n)))}
+                            )$time
+}
+```
+
+Récupération du temps sur 10 graphes pour différentes valeurs de $n$.
+
+```{r, echo=FALSE}
+par(mfrow=c(1,2)) 
+matplot(seqn, temps, xlab="n", ylab="temps")
+matplot(seqn, log(temps)^2, xlab="n", ylab=expression(log(temps)^2))
+```
+Les nombres représentés sont les numéros de colonnes de la valeur à la nième ligne !
+
+Ajustement du modèle linéaire de $\log(temps)^2$ en fonction de $n$.
+
+```{r, echo=FALSE}
+vect_temps <- log(as.vector(temps))^2
+vect_dim <- rep(seqn,times=10)
+temps.lm <- lm(vect_temps~vect_dim)
+summary(temps.lm)
+```
+
+COMMENTER 
+
+Analyse de la validité du modèle : 
+
+  * pertinence des coefficients et du modèle
+
+```{r, echo=FALSE}
+par(mfrow=c(2,2)) 
+plot(temps.lm)
+```
+  
+COMMENTER
+  
+  * étude des hypothèses sur les résidus.
+  
+  PAS SUR QUE LE PARAMETRE SOIT temps.lm
+
+(H0) les résidus suivent une loi normale
+(H1) les résidus ne suivent pas une loi normale
+
+On prend un risque alpha=5%
+  
+```{r, echo=FALSE}
+shapiroTest<-shapiro.test(residuals(temps.lm))
+print(shapiroTest)
+```
+
+```{r, echo=FALSE}
+#risque 5%
+alpha=0.05
+if(shapiroTest$p.value < alpha){
+  print("p-valeur < alpha")
+  print("On peut rejeter H0")
+}else{
+  print("p-valeur >= alpha")
+  print("On ne peut pas rejeter H0")
+}
+```
+On rejette H0, donc nous pouvons affirmer que les résidus ne suivent pas une loi normale.
+
+## 2.2. Comportement par rapport au nombre de sommets : étude du comportement moyen
+
+Récupération du temps moyen.
+
+```{r, echo=FALSE}
+temps.moy<-rowMeans(temps)
+```
+
+Ajustement du modèle linéaire de $\log(temps.moy)^2$ en fonction de $n$.
+
+```{r, echo=FALSE}
+vect_temps_moy <- log(as.vector(temps.moy))^2
+vect_dim_moy <- rep(seqn)
+temps.lm_moy <- lm(vect_temps_moy~vect_dim_moy)
+summary(temps.lm_moy)
+```
+
+Analyse de la validité du modèle : 
+
+  * pertinence des coefficients et du modèle
+  
+```{r, echo=FALSE}
+par(mfrow=c(2,2)) 
+plot(temps.lm_moy)
+```
+  
+  * étude des hypothèses sur les résidus.
+  
+  PAS SUR QUE LE PARAMETRE SOIT temps.lm_moy
+
+(H0) les résidus suivent une loi normale
+(H1) les résidus ne suivent pas une loi normale
+
+On prend un risque alpha=5%
+  
+```{r, echo=FALSE}
+shapiroTest_moy<-shapiro.test(residuals(temps.lm_moy))
+print(shapiroTest_moy)
+```
+
+```{r, echo=FALSE}
+#risque 5%
+alpha=0.05
+if(shapiroTest_moy$p.value < alpha){
+  print("p-valeur < alpha")
+  print("On peut rejeter H0")
+}else{
+  print("p-valeur >= alpha")
+  print("On ne peut pas rejeter H0")
+}
+```
+On ne peut pas rejeter H0. Donc on peut assurer avec un risque de 5% que les résidus suivent une loi normale.
+Validité du modèle ???
+
+## 2.3. Comportement par rapport à la structure du graphe
+
+Lecture du fichier 'DonneesTSP.csv'.
+
+```{r, echo=TRUE}
+data.graph <- read.csv('DonneesTSP.csv',header=TRUE,dec='.',sep=';',quote="\"")
+str(data.graph)
+```
+
+Ajustement du modèle linéaire de $\log(temps.moy)^2$ en fonction de toutes les variables présentes. Modèle sans constante.
+
+```{r, echo=TRUE}
+#lm(log(data.graph$tps)~., data = data.graph)
+```
+
+Mise en \oe uvre d'une sélection de variables pour ne garder que les variables pertinentes.
+
+Analyse de la validité du modèle : 
+
+  * pertinence des coefficients et du modèle, 
+  
+  * étude des hypothèses sur les résidus.
+

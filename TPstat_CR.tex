@@ -1,0 +1,503 @@
+\PassOptionsToPackage{unicode=true}{hyperref} % options for packages loaded elsewhere
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provides euro and other symbols
+\else % if luatex or xelatex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage[]{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\usepackage{hyperref}
+\hypersetup{
+            pdftitle={TP Statistique},
+            pdfauthor={Cédric Milinaire, Corentin Laharotte},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+% set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+
+
+\title{TP Statistique}
+\author{Cédric Milinaire, Corentin Laharotte}
+\date{4 avril 2020}
+
+\begin{document}
+\maketitle
+
+Voici le plan de ce qui sera fait dans le TP.
+
+\hypertarget{visualisation-de-chemins}{%
+\section{0. Visualisation de chemins}\label{visualisation-de-chemins}}
+
+Lecture du fichier des villes :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{villes <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{'DonneesGPSvilles.csv'}\NormalTok{,}\DataTypeTok{header=}\OtherTok{TRUE}\NormalTok{,}\DataTypeTok{dec=}\StringTok{'.'}\NormalTok{,}\DataTypeTok{sep=}\StringTok{';'}\NormalTok{,}\DataTypeTok{quote=}\StringTok{"}\CharTok{\textbackslash{}"}\StringTok{"}\NormalTok{)}
+\KeywordTok{str}\NormalTok{(villes)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 'data.frame':    22 obs. of  5 variables:
+##  $ EU_circo : Factor w/ 7 levels "Centre","Est",..: 6 6 4 2 7 4 2 1 2 4 ...
+##  $ region   : Factor w/ 22 levels "Alsace","Aquitaine",..: 22 9 19 10 2 4 8 3 5 17 ...
+##  $ ville    : Factor w/ 22 levels "Ajaccio","Amiens",..: 11 1 2 3 4 5 6 7 8 9 ...
+##  $ latitude : num  45.7 41.9 49.9 47.2 44.8 ...
+##  $ longitude: num  4.847 8.733 2.3 6.033 -0.567 ...
+\end{verbatim}
+
+Représentation des chemins par plus proches voisins et du chemin optimal
+:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{coord <-}\StringTok{ }\KeywordTok{cbind}\NormalTok{(villes}\OperatorTok{$}\NormalTok{longitude,villes}\OperatorTok{$}\NormalTok{latitude)}
+\NormalTok{dist <-}\StringTok{ }\KeywordTok{distanceGPS}\NormalTok{(coord)}
+\NormalTok{voisins <-}\StringTok{ }\KeywordTok{TSPnearest}\NormalTok{(dist)}
+
+\NormalTok{pathOpt <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{8}\NormalTok{,}\DecValTok{9}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{21}\NormalTok{,}\DecValTok{13}\NormalTok{,}\DecValTok{7}\NormalTok{,}\DecValTok{10}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{17}\NormalTok{,}\DecValTok{16}\NormalTok{,}\DecValTok{20}\NormalTok{,}\DecValTok{6}\NormalTok{,}\DecValTok{19}\NormalTok{,}\DecValTok{15}\NormalTok{,}\DecValTok{18}\NormalTok{,}\DecValTok{11}\NormalTok{,}\DecValTok{5}\NormalTok{,}\DecValTok{22}\NormalTok{,}\DecValTok{14}\NormalTok{,}\DecValTok{12}\NormalTok{,}\DecValTok{2}\NormalTok{)}
+
+\KeywordTok{par}\NormalTok{(}\DataTypeTok{mfrow=}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{),}\DataTypeTok{mar=}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{1}\NormalTok{))}
+\KeywordTok{plotTrace}\NormalTok{(coord[voisins}\OperatorTok{$}\NormalTok{chemin,], }\DataTypeTok{title=}\StringTok{'Plus proches voisins'}\NormalTok{)}
+\KeywordTok{plotTrace}\NormalTok{(coord[pathOpt,], }\DataTypeTok{title=}\StringTok{'Chemin optimal'}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{TPstat_CR_files/figure-latex/unnamed-chunk-2-1.pdf}
+
+Les longueurs des trajets (à vol d'oiseau) valent respectivement, pour
+la méthode des plus proches voisins :
+
+\begin{verbatim}
+## [1] 4303.568
+\end{verbatim}
+
+et pour la méthode optimale :
+
+\begin{verbatim}
+## [1] 3793.06
+\end{verbatim}
+
+Ceci illustre bien l'intérêt d'un algorithme de voyageur de commerce.
+Nous allons dans la suite étudier les performances de cet algorithme.
+
+\hypertarget{comparaison-dalgorithmes}{%
+\section{1. Comparaison d'algorithmes}\label{comparaison-dalgorithmes}}
+
+Nombre de sommets fixes et graphes ``identiques''.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{      n <-}\StringTok{ }\DecValTok{10}
+\NormalTok{sommets <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{x =} \KeywordTok{runif}\NormalTok{(n), }\DataTypeTok{y =} \KeywordTok{runif}\NormalTok{(n))}
+\NormalTok{  couts <-}\StringTok{ }\KeywordTok{distance}\NormalTok{(sommets)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{longueur-des-chemins}{%
+\subsection{1.1. Longueur des chemins}\label{longueur-des-chemins}}
+
+Comparaison des longueurs de différentes méthodes :
+
+\begin{itemize}
+\tightlist
+\item
+  boxplots
+\end{itemize}
+
+\includegraphics{TPstat_CR_files/figure-latex/unnamed-chunk-6-1.pdf}
+
+\begin{itemize}
+\tightlist
+\item
+  test entre `nearest' et `branch'
+\end{itemize}
+
+On souhaite comparer les méthodes des plus proches voisins et
+Branch\&Bound. On réalise le test sur l'espérance : (H0) m\_nn - m\_b
+\textless{}= 0 \textless{}=\textgreater{} m\_nn\textless{}=m\_b (H1)
+m\_nn - m\_b \textgreater{} 0 \textless{}=\textgreater{}
+m\_nn\textgreater{}m\_b
+
+Région critique à 5\% : \{T \textgreater{} t\_n-1;2a\}
+
+T =
+
+\begin{verbatim}
+## [1] 5.799712
+\end{verbatim}
+
+t\_a =
+
+\begin{verbatim}
+## [1] 2.009575
+\end{verbatim}
+
+\begin{verbatim}
+## [1] "T > t_a"
+## [1] "On peut rejeter H0"
+\end{verbatim}
+
+On peut rejeter H0, et affirmer avec un risque de 5\% que les chemins
+des plus proches voisins sont en moyenne plus long que ceux de
+Branch\&Bound.
+
+(Pour celui là je suis pas sûr que ce soit cette méthode qu'il faille
+utiliser !)
+
+Vérification
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{t <-}\StringTok{ }\KeywordTok{t.test}\NormalTok{(cheminNearest,}\DataTypeTok{mu=}\KeywordTok{mean}\NormalTok{(cheminBranch) ,}\DataTypeTok{alternative =} \StringTok{"greater"}\NormalTok{) }\CommentTok{#alternative = "greater" pour H1 m > m0}
+\KeywordTok{print}\NormalTok{(t)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  One Sample t-test
+## 
+## data:  cheminNearest
+## t = 5.7997, df = 49, p-value = 2.378e-07
+## alternative hypothesis: true mean is greater than 2.850538
+## 95 percent confidence interval:
+##  3.053389      Inf
+## sample estimates:
+## mean of x 
+##  3.135872
+\end{verbatim}
+
+On peut aussi faire t.test(cheminNearest, cheminBranch,alternative =
+``greater'')
+
+\begin{itemize}
+\tightlist
+\item
+  tests 2 à 2
+\end{itemize}
+
+Ici (H0) mi=mj (H1) mi!=mj
+
+\begin{verbatim}
+## 
+##  Pairwise comparisons using t tests with pooled SD 
+## 
+## data:  results and methods 
+## 
+##                   branch  nearest nearest_insertion repetitive_nn
+## nearest           0.00078 -       -                 -            
+## nearest_insertion 0.02272 0.94921 -                 -            
+## repetitive_nn     0.94921 0.01702 0.20157           -            
+## two_opt           0.09341 0.53849 0.94921           0.53849      
+## 
+## P value adjustment method: holm
+\end{verbatim}
+
+A COMMENTER
+
+Si on accepte de se tromper de alpha=5\%, on rejette H0 si la pvaleur de
+(i,j) est inférieure à alpha/10 (vu dans l'énoncé donc 0.05). ? pas sûr
+de ça !
+
+\hypertarget{temps-de-calcul}{%
+\subsection{1.2. Temps de calcul}\label{temps-de-calcul}}
+
+Comparaison des temps à l'aide du package microbenchmark.
+
+Application de microbenchmark :
+
+\begin{verbatim}
+## Unit: microseconds
+##                                  expr      min        lq      mean    median
+##      TSPsolve(couts, "repetitive_nn") 3457.635 3769.9185 3923.0684 3962.6845
+##  TSPsolve(couts, "nearest_insertion")  562.313  586.6955  697.4603  689.1540
+##            TSPsolve(couts, "two_opt")  319.913  341.6255  390.4273  367.6880
+##            TSPsolve(couts, "nearest")    8.698    9.7350   14.6087   13.1775
+##             TSPsolve(couts, "branch")  972.159 1855.8935 3051.9718 2684.9120
+##         uq       max neval
+##  4021.5930  4365.725    20
+##   749.2350   975.256    20
+##   414.2715   636.984    20
+##    14.8550    45.089    20
+##  3318.3975 10146.461    20
+\end{verbatim}
+
+\hypertarget{etude-de-la-complexituxe9-de-lalgorithme-branch-and-bound}{%
+\section{2. Etude de la complexité de l'algorithme Branch and
+Bound}\label{etude-de-la-complexituxe9-de-lalgorithme-branch-and-bound}}
+
+\hypertarget{comportement-par-rapport-au-nombre-de-sommets-premier-moduxe8le}{%
+\subsection{2.1. Comportement par rapport au nombre de sommets : premier
+modèle}\label{comportement-par-rapport-au-nombre-de-sommets-premier-moduxe8le}}
+
+Récupération du temps sur 10 graphes pour différentes valeurs de \(n\).
+
+\includegraphics{TPstat_CR_files/figure-latex/unnamed-chunk-16-1.pdf}
+Les nombres représentés sont les numéros de colonnes de la valeur à la
+nième ligne !
+
+Ajustement du modèle linéaire de \(\log(temps)^2\) en fonction de \(n\).
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = vect_temps ~ vect_dim)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -71.369 -19.114   3.286  21.137  60.481 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)  58.9734     5.4253   10.87   <2e-16 ***
+## vect_dim     14.1713     0.4186   33.86   <2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 26.74 on 168 degrees of freedom
+## Multiple R-squared:  0.8722, Adjusted R-squared:  0.8714 
+## F-statistic:  1146 on 1 and 168 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+COMMENTER
+
+Analyse de la validité du modèle :
+
+\begin{itemize}
+\tightlist
+\item
+  pertinence des coefficients et du modèle
+\end{itemize}
+
+\includegraphics{TPstat_CR_files/figure-latex/unnamed-chunk-18-1.pdf}
+
+COMMENTER
+
+\begin{itemize}
+\tightlist
+\item
+  étude des hypothèses sur les résidus.
+\end{itemize}
+
+PAS SUR QUE LE PARAMETRE SOIT temps.lm
+
+(H0) les résidus suivent une loi normale (H1) les résidus ne suivent pas
+une loi normale
+
+On prend un risque alpha=5\%
+
+\begin{verbatim}
+## 
+##  Shapiro-Wilk normality test
+## 
+## data:  residuals(temps.lm)
+## W = 0.97119, p-value = 0.001325
+\end{verbatim}
+
+\begin{verbatim}
+## [1] "p-valeur < alpha"
+## [1] "On peut rejeter H0"
+\end{verbatim}
+
+On rejette H0, donc nous pouvons affirmer que les résidus ne suivent pas
+une loi normale.
+
+\hypertarget{comportement-par-rapport-au-nombre-de-sommets-uxe9tude-du-comportement-moyen}{%
+\subsection{2.2. Comportement par rapport au nombre de sommets : étude
+du comportement
+moyen}\label{comportement-par-rapport-au-nombre-de-sommets-uxe9tude-du-comportement-moyen}}
+
+Récupération du temps moyen.
+
+Ajustement du modèle linéaire de \(\log(temps.moy)^2\) en fonction de
+\(n\).
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = vect_temps_moy ~ vect_dim_moy)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -36.915 -13.217   8.921  13.477  25.991 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)   59.0607    12.8854   4.584 0.000358 ***
+## vect_dim_moy  14.5681     0.9941  14.654  2.7e-10 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 20.08 on 15 degrees of freedom
+## Multiple R-squared:  0.9347, Adjusted R-squared:  0.9304 
+## F-statistic: 214.7 on 1 and 15 DF,  p-value: 2.697e-10
+\end{verbatim}
+
+Analyse de la validité du modèle :
+
+\begin{itemize}
+\tightlist
+\item
+  pertinence des coefficients et du modèle
+\end{itemize}
+
+\includegraphics{TPstat_CR_files/figure-latex/unnamed-chunk-23-1.pdf}
+
+\begin{itemize}
+\tightlist
+\item
+  étude des hypothèses sur les résidus.
+\end{itemize}
+
+PAS SUR QUE LE PARAMETRE SOIT temps.lm\_moy
+
+(H0) les résidus suivent une loi normale (H1) les résidus ne suivent pas
+une loi normale
+
+On prend un risque alpha=5\%
+
+\begin{verbatim}
+## 
+##  Shapiro-Wilk normality test
+## 
+## data:  residuals(temps.lm_moy)
+## W = 0.88931, p-value = 0.04513
+\end{verbatim}
+
+\begin{verbatim}
+## [1] "p-valeur < alpha"
+## [1] "On peut rejeter H0"
+\end{verbatim}
+
+On ne peut pas rejeter H0. Donc on peut assurer avec un risque de 5\%
+que les résidus suivent une loi normale. Validité du modèle ???
+
+\hypertarget{comportement-par-rapport-uxe0-la-structure-du-graphe}{%
+\subsection{2.3. Comportement par rapport à la structure du
+graphe}\label{comportement-par-rapport-uxe0-la-structure-du-graphe}}
+
+Lecture du fichier `DonneesTSP.csv'.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data.graph <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{'DonneesTSP.csv'}\NormalTok{,}\DataTypeTok{header=}\OtherTok{TRUE}\NormalTok{,}\DataTypeTok{dec=}\StringTok{'.'}\NormalTok{,}\DataTypeTok{sep=}\StringTok{';'}\NormalTok{,}\DataTypeTok{quote=}\StringTok{"}\CharTok{\textbackslash{}"}\StringTok{"}\NormalTok{)}
+\KeywordTok{str}\NormalTok{(data.graph)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 'data.frame':    70 obs. of  1 variable:
+##  $ tps.dim.mean.long.mean.dist.sd.dist.mean.deg.sd.deg.diameter: Factor w/ 70 levels "10727263,12,0.197262188031624,0.37067582512226,0.267885367956632,11,0,1",..: 49 10 70 24 55 5 26 39 48 35 ...
+\end{verbatim}
+
+Ajustement du modèle linéaire de \(\log(temps.moy)^2\) en fonction de
+toutes les variables présentes. Modèle sans constante.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#lm(log(data.graph$tps)~., data = data.graph)}
+\end{Highlighting}
+\end{Shaded}
+
+Mise en \oe uvre d'une sélection de variables pour ne garder que les
+variables pertinentes.
+
+Analyse de la validité du modèle :
+
+\begin{itemize}
+\item
+  pertinence des coefficients et du modèle,
+\item
+  étude des hypothèses sur les résidus.
+\end{itemize}
+
+\end{document}
