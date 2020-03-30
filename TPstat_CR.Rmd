@@ -301,7 +301,7 @@ plot(temps.lm)
  
  
 ```{r, echo=FALSE}
-plot(temps.lm,which=4)
+plot(temps.lm,which=5)
 ```
 
   * Il est aussi possible d'éffectuer un test statistique sur les résidus. En effet s'ils suivent une loi normale ceci indique le bon fit du modèle. 
@@ -331,8 +331,7 @@ On ne peut rejetter H0, donc nous pouvons affirmer que les résidusne suivent un
 
 
 ## 2.2. Comportement par rapport au nombre de sommets : étude du comportement moyen
-
-
+L'explication des résultats étants similaire a 2.1, nous allons simplement afficher nos résultats.\\
 Récupération du temps moyen.
 
 ```{r, echo=FALSE}
@@ -350,17 +349,27 @@ summary(temps.lm_moy)
 
 Analyse de la validité du modèle : 
 
-  * pertinence des coefficients et du modèle
+  * $a$ pertinent $p-value = 2.3*10^{-9}$
+  * $b$ pertinent $p-value = 0.000476$
+  
   
 ```{r, echo=FALSE}
 par(mfrow=c(2,2)) 
 plot(temps.lm_moy)
 ```
-  
-  * étude des hypothèses sur les résidus.
-  
-  PAS SUR QUE LE PARAMETRE SOIT temps.lm_moy
 
+ 
+ *Residuals vs Fitted: La courbe n'est pas du tou  horizontal. Il y'a donc un important effet d'échelle. 
+ * Normal Q-Q: Les distributions sont identiques.
+ *Scale Location: L'effet d'échelle disparait. Le nuage de point est sans structure. Ce qui indique la qualité du modèle. 
+
+  
+  * Il est aussi possible d'éffectuer un test statistique sur les résidus. En effet s'ils suivent une loi normale ceci indique le bon fit du modèle. 
+  * Définissons: 
+    *$(H0)$ les résidus suivent une loi normale
+    *$(H1)$ les résidus ne suivent pas une loi normale
+  * Pour tester ceci nous pouvons efféctuer un test de shapiro. 
+  
 (H0) les résidus suivent une loi normale
 (H1) les résidus ne suivent pas une loi normale
 
@@ -382,8 +391,8 @@ if(shapiroTest_moy$p.value < alpha){
   print("On ne peut pas rejeter H0")
 }
 ```
-On ne peut pas rejeter H0. Donc on peut assurer avec un risque de 5% que les résidus suivent une loi normale.
-Validité du modèle ???
+On ne peut pas rejeter H0. Donc on peut assurer avec un risque de 5% que les résidus suivent une loi normale. Ceci valide donc le modèle. 
+
 
 ## 2.3. Comportement par rapport à la structure du graphe
 
