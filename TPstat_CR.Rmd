@@ -214,6 +214,15 @@ microbenchmark(TSPsolve(couts,"repetitive_nn"), TSPsolve(couts,"nearest_insertio
 -en moyenne ils sont tous a peu pres equivalent en parecequ'on ne peut pas rejeter h0 pour tous sauf repitive nn 
 -confirmer en regardant les chiffres repetitve nn prend en moyenne au moins 2x plus de temps que les autres
 
+### commentaire prof
+Tout les membres d’un meme groupe n’ont pas de différence significative pour leurs moyenne et les groupes
+{a, b, c, d, . . . } sont rangés de manière croisante.
+Exemple - si variables X et variable Y sont dans le groupe a alors m X ' m Y où plutot qu’il n’a pas pu être
+mis en évidence une différence significative entre les deux. - si variables X et variable Y sont dans le groupe
+a et b alors m X 6 = m Y significativement. Et comme {a, b, c, d, . . . } sont rangés de manière croisante alors
+m a < m b donc m X < m Y
+
+
 
 # 2. Etude de la complexité de l'algorithme Branch and Bound
 
