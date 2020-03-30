@@ -300,6 +300,10 @@ if(shapiroTest$p.value < alpha){
 ```
 On rejette H0, donc nous pouvons affirmer que les résidus ne suivent pas une loi normale.
 
+```{r, echo=FALSE}
+plot(temps.lm,which=5)
+```
+
 ## 2.2. Comportement par rapport au nombre de sommets : étude du comportement moyen
 
 Récupération du temps moyen.
@@ -359,15 +363,38 @@ Validité du modèle ???
 Lecture du fichier 'DonneesTSP.csv'.
 
 ```{r, echo=TRUE}
-data.graph <- read.csv('DonneesTSP.csv',header=TRUE,dec='.',sep=';',quote="\"")
+data.graph <- data.frame(read.csv('DonneesTSP.csv'))
+data.graph$dim<-sqrt(data.graph$dim)
 str(data.graph)
 ```
+
+
+
 
 Ajustement du modèle linéaire de $\log(temps.moy)^2$ en fonction de toutes les variables présentes. Modèle sans constante.
 
 ```{r, echo=TRUE}
-#lm(log(data.graph$tps)~., data = data.graph)
+model.complete <- lm(log(tps)~., data = data.graph)
 ```
+
+
+
+```{r, echo=TRUE}
+(step(model.complete))
+```
+
+
+
+
+
+```{r, echo=TRUE}
+new_model <- lm(formula = log(tps) ~ dim + mean.long + mean.dist + sd.dist + 
+    mean.deg + sd.deg, data = data.graph)
+shapiroTest_aic<-shapiro.test(residuals(new_model))
+print(shapiroTest_aic)
+```
+
+
 
 Mise en \oe uvre d'une sélection de variables pour ne garder que les variables pertinentes.
 
