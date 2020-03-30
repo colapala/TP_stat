@@ -183,7 +183,9 @@ results<-c(cheminRepetitive, cheminNearestIns, chemin2Opt, cheminNearest, chemin
 pairwise.t.test(results,methods,adjust.method="bonferroni")
 ```
 A COMMENTER 
-
+```{r, echo=FALSE}
+?pairwise.t.test
+```
 Si on accepte de se tromper de alpha=5%, on rejette H0 si la pvaleur de (i,j) est inférieure à alpha.
 
 On rejette H0: 
@@ -301,7 +303,7 @@ if(shapiroTest$p.value < alpha){
 On rejette H0, donc nous pouvons affirmer que les résidus ne suivent pas une loi normale.
 
 ```{r, echo=FALSE}
-plot(temps.lm,which=5)
+plot(temps.lm,which=4)
 ```
 
 ## 2.2. Comportement par rapport au nombre de sommets : étude du comportement moyen
