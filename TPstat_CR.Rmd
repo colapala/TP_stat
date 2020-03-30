@@ -3,9 +3,9 @@ title: "TP Statistique"
 author: "Cédric Milinaire, Corentin Laharotte"
 date: "4 avril 2020"
 output:
+  pdf_document: default
   html_document:
     df_print: paged
-  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -116,20 +116,22 @@ L'affichage sous forme de boxplot nous permet de remarquer que :
 - la méthode branch renvoie le plus souvent un chemin plus court que les autres méthodes
 - la méthode nearest renvoie le plus souvent un chemin plus long que les autres méthodes
 - la boîte de la méthode repetitive_nn est moins étendue que les boîtes obtenues par les autres méthodes, ce qui nous permet de constater que 50% des valeurs sont très proches de la valeur médiane
-- la boîte de la méthode nearest_insertion est plus étendue que les boîtes obtenues par les autres méthodes, ce qui nous permet de constater que 50% des valeurs sont assez étendues autour de la valeur médiane \\
-  
+- la boîte de la méthode nearest_insertion est plus étendue que les boîtes obtenues par les autres méthodes, ce qui nous permet de constater que 50% des valeurs sont assez étendues autour de la valeur médiane   
+    
 L'affichage obtenu est assez cohérent puisqu'aucune méthode n'a de valeur moyenne complètement absurde par rapport aux autre méthodes.
 
 ### test entre 'nearest' et 'branch'
  
-On souhaite maintenant comparer les méthodes des plus proches voisins et Branch&Bound.\\
-On réalise donc un test sur l'espérance de chaque méthode.\\
-Notre hypothèse nulle (H0) est que la moyenne des chemins hamiltoniens obtenus avec la méthode des plus proches voisins est inférieure ou égale à la moyenne des chemins hamiltoniens obtenus avec la méthode Branch&Bound. Notre hypothèse alternative (H1) est que la moyenne des chemins hamiltoniens obtenus avec la méthode des plus proches voisins est supérieure à la moyenne des chemins hamiltoniens obtenus avec la méthode Branch&Bound.\\
-  (H0) $m_{nn} - m_b <= 0$    <=>  $m_{nn} <= m_b$ \\
-  (H1) $m_{nn} - m_b > 0$     <=> $m_{nn} > m_b$ \\
+On souhaite maintenant comparer les méthodes des plus proches voisins et Branch&Bound.  
+On réalise donc un test sur l'espérance de chaque méthode.  
+  
+Notre hypothèse nulle (H0) est que la moyenne des chemins hamiltoniens obtenus avec la méthode des plus proches voisins est inférieure ou égale à la moyenne des chemins hamiltoniens obtenus avec la méthode Branch&Bound. Notre hypothèse alternative (H1) est que la moyenne des chemins hamiltoniens obtenus avec la méthode des plus proches voisins est supérieure à la moyenne des chemins hamiltoniens obtenus avec la méthode Branch&Bound. 
+  
+  (H0) $m_{nn} - m_b <= 0$    <=>  $m_{nn} <= m_b$   
+  (H1) $m_{nn} - m_b > 0$     <=> $m_{nn} > m_b$   
  
-Nous allons ensuite tester si au seuil de 5% la moyenne des chemins hamiltoniens obtenus avec la méthode des plus proches voisins est inférieure ou égale à la moyenne des chemins hamiltoniens obtenus avec la méthode Branch&Bound. \\
-Pour cela, nous allons faire une comparaison d'échantillons gaussiens appariés.En effet, les deux méthodes étant basées sur les mêmes graphes, les résultats obtenus ne peuvent pas être considérés comme indépéndant.\\
+Nous allons ensuite tester si au seuil de 5% la moyenne des chemins hamiltoniens obtenus avec la méthode des plus proches voisins est inférieure ou égale à la moyenne des chemins hamiltoniens obtenus avec la méthode Branch&Bound.   
+Pour cela, nous allons faire une comparaison d'échantillons gaussiens appariés.En effet, les deux méthodes étant basées sur les mêmes graphes, les résultats obtenus ne peuvent pas être considérés comme indépéndant.  
 
 On pose $a=0.05$.
 
@@ -154,17 +156,19 @@ if(a>t_a$p.value){
    print("On ne peut pas rejeter H0")
 }
 ```
-On observe que la $p_{valeur}$ obtenue est strictement inférieure à a. \\
+On observe que la $p_{valeur}$ obtenue est strictement inférieure à a.   
 On peut rejeter H0, et affirmer avec un risque de 5% que les chemins hamiltoniens obtenus avec la méthode des plus proches voisins sont en moyenne plus longs que ceux obtenus avec la méthode Branch&Bound.
 
 ### tests 2 à 2 
-On souhaite maintenant comparer 2 à 2 les longueurs moyennes des chemins hamiltoniens obtenus par les 5 méthodes vues précédemment.\\
-On réalise donc un test sur l'espérance de chaque méthode. \\
-Soit i, j deux méthodes différentes .Notre hypothèse nulle (H0) est que la moyenne des chemins hamiltoniens obtenus avec la méthode i est égale à la moyenne des chemins hamiltoniens obtenus avec la méthode j. Notre hypothèse alternative (H1) est que la moyenne des chemins hamiltoniens obtenus avec la méthode i est différente de la moyenne des chemins hamiltoniens obtenus avec la méthode j.\\
-(H0) $mi=mj$ \\
-(H1) $mi!=mj$ \\
+On souhaite maintenant comparer 2 à 2 les longueurs moyennes des chemins hamiltoniens obtenus par les 5 méthodes vues précédemment.  
+  
+On réalise donc un test sur l'espérance de chaque méthode.   
+Soit i, j deux méthodes différentes .Notre hypothèse nulle (H0) est que la moyenne des chemins hamiltoniens obtenus avec la méthode i est égale à la moyenne des chemins hamiltoniens obtenus avec la méthode j. Notre hypothèse alternative (H1) est que la moyenne des chemins hamiltoniens obtenus avec la méthode i est différente de la moyenne des chemins hamiltoniens obtenus avec la méthode j.  
+  
+(H0) $mi=mj$   
+(H1) $mi!=mj$   
 
-Nous avons lancé 10 tests simultanés, et obtenus les résulats suivants : \\
+Nous avons lancé 10 tests simultanés, et obtenus les résulats suivants :   
   
 ```{r, echo=FALSE}
 methodsRepetitive <- vector()
@@ -186,10 +190,10 @@ results<-c(cheminRepetitive, cheminNearestIns, chemin2Opt, cheminNearest, chemin
 #test
 pairwise.t.test(results,methods,adjust.method="bonferroni")
 ```
-Nous allons tester si au seuil de 5%, notre hypothèse H0 est vérifiée.\\ \\
+Nous allons tester si au seuil de 5%, notre hypothèse H0 est vérifiée.     
 
-Si on accepte un risque alpha=5%, on rejette notre hypothèse nulle (H0) si la $p_{valeur}$ obtenue à l'indice [i,j] est inférieure à alpha.\\ 
-Donc, si la valeur à l'indice [i,j] est inférieure à alpha, nous pouvons affirmer que la moyenne des chemins hamiltoniens obtenus avec la méthode i est différente de celle obtenue avec la méthode j.\\
+Si on accepte un risque alpha=5%, on rejette notre hypothèse nulle (H0) si la $p_{valeur}$ obtenue à l'indice [i,j] est inférieure à alpha.   
+Donc, si la valeur à l'indice [i,j] est inférieure à alpha, nous pouvons affirmer que la moyenne des chemins hamiltoniens obtenus avec la méthode i est différente de celle obtenue avec la méthode j.  
 
 En appliquant ce principe à nos résultats, nous pouvons dire que :
 
@@ -200,12 +204,14 @@ Pour les autres méthodes, nous ne pouvons pas rejeter l'hypothèse d'après laq
 
 ## 1.2. Temps de calcul
 
-Nous souhaitons maintenant comparer les temps d'éxécution des différentes méthodes de calcul de longueur de chemin hamiltonien sur 20 graphes de 10 sommets générés aléatoirement.\\
+Nous souhaitons maintenant comparer les temps d'éxécution des différentes méthodes de calcul de longueur de chemin hamiltonien sur 20 graphes de 10 sommets générés aléatoirement.  
 
-Nous avons utilisé la focntion benchmark pour réaliser des statistiques d'exécution pour chaque méthode. 
-Nous avons réalisé des tests sur les temps moyens d'exécution de chaque méthode : \\
-Soit i, j deux méthodes différentes .Notre hypothèse nulle (H0) est que le temps moyen d'exécution de la méthode i est égale au temps moyen d'exécution de la méthode j. Notre hypothèse alternative (H1) est que le temps moyen d'exécution de la méthode i est différent du temps moyen d'exécution de la méthode j.\\
-Le résultat de ces tests est représenté par une lettre dans la colonne X du tableau ci-dessous. Une même lettre est attribuée aux méthodes pour lequelles H0 n'est pas rejetée. Deux méthodes ayant des lettres différentes ont des temps d'exécution moyens différents.\\
+Nous avons utilisé la focntion benchmark pour réaliser des statistiques d'exécution pour chaque méthode.   
+  
+Nous avons réalisé des tests sur les temps moyens d'exécution de chaque méthode :   
+Soit i, j deux méthodes différentes .Notre hypothèse nulle (H0) est que le temps moyen d'exécution de la méthode i est égale au temps moyen d'exécution de la méthode j. Notre hypothèse alternative (H1) est que le temps moyen d'exécution de la méthode i est différent du temps moyen d'exécution de la méthode j.  
+  
+Le résultat de ces tests est représenté par une lettre dans la colonne cld du tableau ci-dessous. Une même lettre est attribuée aux méthodes pour lequelles H0 n'est pas rejetée. Deux méthodes ayant des lettres différentes ont des temps d'exécution moyens différents.  
 
 ```{r, echo=FALSE}
 microbenchmark(TSPsolve(couts,"repetitive_nn"), TSPsolve(couts,"nearest_insertion"), TSPsolve(couts,"two_opt"), TSPsolve(couts,"nearest"), TSPsolve(couts,"branch"), 
@@ -217,13 +223,16 @@ microbenchmark(TSPsolve(couts,"repetitive_nn"), TSPsolve(couts,"nearest_insertio
                 }
             )
 ```
-Nous pouvons remarquer que les méthodes nearest_insertion, two_opt et nearest ont un temps d'exécution moyen similaires. Les méthodes sont classées 'a', ce qui montre que ce sont les méthodes les plus rapides des 5 méthodes proposées. De plus, les 3 méthodes ayant le même classement, on ne peut pas rejeter le fait que les temps moyens d'exécution de ces méthode sont équivalents. Il n'a, en tout cas, pas été mis en évidence que ces méthodes avaient des temps d'exécution significativement différents. \\
-Les méthodes repetitive_nn et branch ont une durée d'exécution moyenne supérieure aux autres. \\
-La méthode repetitive_nn est classée 'd', ce qui fait que l'on peut affirmer que le temps moyen d'exécution de cette méthode est différent du temps moyen d'exécution des autres méthodes. De plus, comme les lettres {a, b, c, ...} sont attribuées en fonction du temps d'exécution ('a' pour la plus rapide, ...), on peut en déduire que le temps moyen d'exécution de repetitive_nn est plus important que le temps moyens des autres méthodes.
-\\
+Nous pouvons remarquer que les méthodes nearest_insertion, two_opt et nearest ont un temps d'exécution moyen similaires. Les méthodes sont classées 'a', ce qui montre que ce sont les méthodes les plus rapides des 5 méthodes proposées. De plus, les 3 méthodes ayant le même classement, on ne peut pas rejeter le fait que les temps moyens d'exécution de ces méthode sont équivalents. Il n'a, en tout cas, pas été mis en évidence que ces méthodes avaient des temps d'exécution significativement différents.     
+Les méthodes repetitive_nn et branch ont une durée d'exécution moyenne supérieure aux autres.
+  
+La méthode repetitive_nn est classée 'd', ce qui fait que l'on peut affirmer que le temps moyen d'exécution de cette méthode est différent du temps moyen d'exécution des autres méthodes. De plus, comme les lettres {a, b, c, ...} sont attribuées en fonction du temps d'exécution ('a' pour la plus rapide, ...), on peut en déduire que le temps moyen d'exécution de repetitive_nn est plus important que le temps moyens des autres méthodes.  
+  
 Par la même réflexion que celle faite précédemment, nous pouvons remarquer que branch est classé 'b', et a un temps d'exécution moyen plus long que les trois méthodes classées 'a'. Cependant, il a un temps moyen d'exécution inférieur à la méthode repetitive_nn. 
 
 # 2. Etude de la complexité de l'algorithme Branch and Bound
+
+Nous intéressons désormais à l'algorithme Branch&Bound. Nous allons étudier sa complexité en fonction du graphe sur lequel il est appliqué.  
 
 ```{r, echo=FALSE}
 n <- 10
@@ -248,16 +257,19 @@ for (i in 1:number_exec){
 }
 ```
 
-Récupération du temps sur 10 graphes pour différentes valeurs de $n$.
+### Création du modèle linéaire
+Dans un premier temps nous allons créer une matrice temps calculant les temps mis par l'algorithme Branch&Bound pour calculer les chemins hamiltoniens sur un graphe de $n$ sommets généré aléatoirement. Nous réalisons 10 fois l'algorithme sur un graphe à $sommets$, et nous faisons varier $n$ de 4 à 20. La matrice obtenue est donc de dimension 17*10.  
+  
+A l'aide de ces données, nous pouvons afficher le graphe du temps mis par l'algorithme en fonction du nombre de noeuds du graphe, et le graphe de $\log(temps)²$ en fonction nombre de noeuds du graphe. Cela nous donne les résultats ci-dessous.
 
 ```{r, echo=FALSE}
 par(mfrow=c(1,2)) 
 matplot(seqn, temps, xlab="n", ylab="temps")
 matplot(seqn, log(temps)^2, xlab="n", ylab=expression(log(temps)^2))
 ```
-Les nombres représentés sont les numéros de colonnes de la valeur à la nième ligne !
-
-Ajustement du modèle linéaire de $\log(temps)^2$ en fonction de $n$.
+Le graphe du temps mis par l'algorithme en fonction du nombre de noeuds du graphe semble suivre une courbe exponentielle. Cette hypothèse est soutenue par le 2ème graphe.  
+  
+Nous avons ensuite ajusté le modèle linéaire de $\log(temps)²$ en fonction de $n$, pour en récupérer principales charactéristiques. Nous avons obtenu le résultat suivant :  
 
 ```{r, echo=FALSE}
 vect_temps <- log(as.vector(temps))^2
@@ -265,17 +277,24 @@ vect_dim <- rep(seqn,times=10)
 temps.lm <- lm(vect_temps~vect_dim)
 summary(temps.lm)
 ```
+Nous pouvons remarquer qu'il y a une relation linéaire entre $\log(temps)²$ et $n$, puisque le test de Fisher ne rejette pas le modèle linéaire. De plus, $R²$ =
 
-COMMENTER
+```{r, echo=FALSE}
+summary(temps.lm)$r.squared
+```
+$R²$ étant proche de 1, une grande partie des données suivent le modéle linéaire. On peut donc en conclure qu'il y a une relation linéaire entre $\log(temps)²$ et $n$.  
+  
+De ce fait, on peut en déduire que :   
+$\exists \alpha, \beta$ tels que $\log(temps)²=\alpha*n+\beta$   
+soit $\log(temps)=^+_-\sqrt(\alpha*n+\beta)$  
+donc $temps=\exp(^+_-\sqrt(\alpha*n+\beta))$  
+  
+On peut donc en déduire que Branch&Bound semble avoir une complexité temporelle en $\exp(n)$.
 
-- on peut voire que log(tmps^2) en fonction de n suit une courbe lineaire (R squareed = 0.8705) du coups le temps est une fonction exponentielle de n i.e la complexite de temps est exponentielle. 
+### Analyse de la validité du modèle : 
 
-
-
-Analyse de la validité du modèle : 
-
-Le modèle nous renvoie une fonction de type: $Y = aX + b + \epsilon$. En effet nous avons les paramètres suivants: 
-$a = 14.7$, $b = 68.6$. Il reste donc a savoir les coéfficients et donc le modèle sont pertinents. Nous allons tous d'abord analyser la pertinence des coefficients puis celle du modèle en géneral. 
+Le modèle nous renvoie une fonction de type: $Y = aX + b + \epsilon$. En effet nous avons les paramètres suivants:   
+$a = 14.7$, $b = 68.6$. Il reste donc a savoir les coéfficients et donc le modèle sont pertinents. Nous allons tous d'abord analyser la pertinence des coefficients puis celle du modèle en géneral.   
 
   * L'analyse de $a$, permet d'établir un premier résultat quantifiant la significativité du modèle. En effet nous allons tester la significativité de a via le test statistique: $(H0) : a = 0$ contre $(H1) : a \neq 0$. La p-value de celui-ci ce retrouve dans le tableau summary(temps.lm) et est $2.2e-16$. Nous sommes donc capable d'affiirmer avec un risque de  de moins que 0.1% (chiffre arbitraire plus grand que $2.2e-14$ )  que $a$ est significatif.  
   * L'analyse de $b$ est la moins importante. Il nous indique seulement l'importance de l'intercept. Le test statistique est analogique à $a$. Ca p-value est aussi $2.2e-16$ Nous sommes donc capable d'affiirmer avec un risque de  de moins que 0.1% (chiffre arbitraire plus grand que $2.2e-14$ )  que l'intercept est utile.  
@@ -325,7 +344,7 @@ On ne peut rejetter H0, donc nous pouvons affirmer que les résidusne suivent un
 
 
 ## 2.2. Comportement par rapport au nombre de sommets : étude du comportement moyen
-L'explication des résultats étants similaire a 2.1, nous allons simplement afficher nos résultats.\\
+L'explication des résultats étants similaire a 2.1, nous allons simplement afficher nos résultats.  
 Récupération du temps moyen.
 
 ```{r, echo=FALSE}
@@ -343,8 +362,8 @@ summary(temps.lm_moy)
 
 Analyse de la validité du modèle : 
 
-  * $a$ pertinent $p-value = 2.3*10^{-9}$
-  * $b$ pertinent $p-value = 0.000476$
+  * $a$ pertinent $p_{value} = 2.3*10^{-9}$
+  * $b$ pertinent $p_{value} = 0.000476$
   
   
 ```{r, echo=FALSE}
@@ -391,28 +410,27 @@ On ne peut rejetter H0, donc nous pouvons affirmer que les résidus suivent une 
 
 Lecture du fichier 'DonneesTSP.csv'.
 
-```{r, echo=TRUE}
+```{r, echo=FALSE}
 data.graph <- data.frame(read.csv('DonneesTSP.csv'))
 data.graph$dim<-sqrt(data.graph$dim)
-str(data.graph)
 ```
  * D'après nous les variables non pertinentes sont: diameter, mean.dist, sd.dist, mean.long. En effet tous ces variables s'intérèssent seulement aux couts des arretes. Ces derniers n'ont pas d'importance dans le temps de calcul (calculer le chemin avec une arrete de 5 ou dfe 1000 reviens a la meme chose). 
 
 Ajustement du modèle linéaire de $\log(temps.moy)^2$ en fonction de toutes les variables présentes. Modèle sans constante.
 
-```{r, echo=TRUE}
+```{r, echo=FALSE}
 model.complete <- lm(log(tps)~., data = data.graph)
 summary(model.complete)
 ```
 
 
-```{r, echo=TRUE}
+```{r, echo=FALSE}
 (step(model.complete))
 ```
 
 * La variable diameter à été supprimé du modèle. Il reste sd.di, mean.dist et mean.long. Qui nous apparaissent peut pertinente. 
 
-```{r, echo=TRUE}
+```{r, echo=FALSE}
 new_model <- lm(formula = log(tps) ~ dim + mean.long + mean.dist + sd.dist + 
     mean.deg + sd.deg, data = data.graph)
 summary(new_model)
@@ -424,7 +442,7 @@ summary(new_model)
 
 
 
-```{r, echo=TRUE}
+```{r, echo=FALSE}
 new_model <- lm(formula = log(tps) ~ dim + mean.long + mean.dist + sd.dist + 
     mean.deg + sd.deg, data = data.graph)
 shapiroTest_aic<-shapiro.test(residuals(new_model))
