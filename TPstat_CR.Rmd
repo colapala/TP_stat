@@ -113,6 +113,10 @@ boxplot(cheminRepetitive,cheminNearestIns,chemin2Opt,cheminNearest,cheminBranch,
 ```
 
    * test entre 'nearest' et 'branch'
+   - branch plus souvent plus cours 
+   - nearest plus souvent plus long 
+   - repetitive bcp de point proche de la mediane (hauteur carre petite )
+   - insertion sparse data in box 
  
  On souhaite comparer les méthodes des plus proches voisins et Branch&Bound.
  On réalise le test sur l'espérance :
@@ -127,40 +131,31 @@ n<-50
 m_nn<-mean(cheminNearest)
 s_nn<-var(cheminNearest)
 m_b<-mean(cheminBranch)
-
+str(cheminBranch)
+str(m_nn)
+str(s_nn)
+str(m_b)
 # risque = 5%
 a<-0.05
-T<-(m_nn-m_b)/(sqrt(s_nn/n))
-t_a= qt(1-a/2,n-1)
 ```
-T =
 ```{r, echo=FALSE}
 print(T)
 ```
-t_a =
+
+
 ```{r, echo=FALSE}
-print(t_a)
-```
-```{r, echo=FALSE}
-if(T>t_a){
-  print("T > t_a")
+t_a <- t.test(cheminBranch,cheminNearest,mu = 0 ,paired=TRUE,altermative="greater")
+if(a>t_a$p.value){
+  print("a > t_a")
   print("On peut rejeter H0")
 } else {
-   print("T <= t_a")
+   print("a <= t_a")
    print("On ne peut pas rejeter H0")
 }
 ```
+-pvalue petite et  plus petit que alpha 
 On peut rejeter H0, et affirmer avec un risque de 5% que les chemins des plus proches voisins sont en moyenne plus long que ceux de Branch&Bound.
 
-(Pour celui là je suis pas sûr que ce soit cette méthode qu'il faille utiliser !)
-
-Vérification
-
-```{r, echo=TRUE}
-t <- t.test(cheminNearest,mu=mean(cheminBranch) ,alternative = "greater") #alternative = "greater" pour H1 m > m0
-print(t)
-```
-On peut aussi faire t.test(cheminNearest, cheminBranch,alternative = "greater")
 
    * tests 2 à 2 
 
@@ -189,8 +184,14 @@ pairwise.t.test(results,methods,adjust.method="bonferroni")
 ```
 A COMMENTER 
 
-Si on accepte de se tromper de alpha=5%, on rejette H0 si la pvaleur de (i,j) est inférieure à alpha/10 (vu dans l'énoncé donc 0.05).
-? pas sûr de ça !
+Si on accepte de se tromper de alpha=5%, on rejette H0 si la pvaleur de (i,j) est inférieure à alpha.
+
+On rejette H0: 
+- nearest branch 
+- insertion branch 
+- reptitve nearest
+
+Avec un risque de 5% nous pouvons affirmer que ces méthodes ne sont pas similaires sur la longueur moyenne des chemins calculés
 
 ## 1.2. Temps de calcul
 
@@ -208,6 +209,10 @@ microbenchmark(TSPsolve(couts,"repetitive_nn"), TSPsolve(couts,"nearest_insertio
                 }
             )
 ```
+-en moyenne ils sont tous a peu pres equivalent en parecequ'on ne peut pas rejeter h0 pour tous sauf repitive nn 
+-confirmer en regardant les chiffres repetitve nn prend en moyenne au moins 2x plus de temps que les autres
+
+
 # 2. Etude de la complexité de l'algorithme Branch and Bound
 
 ```{r, echo=FALSE}
@@ -219,10 +224,12 @@ couts <- distance(sommets)
 ## 2.1. Comportement par rapport au nombre de sommets : premier modèle
 
 ```{r, echo=FALSE}
-seqn <- seq(4,20,1)
+seq_max <- 24
+seqn <- seq(4,seq_max,1)
+number_exec <- seq_max-3
 
-temps<-matrix(, nrow = 17, ncol = 10)
-for (i in 1:17){
+temps<-matrix(, nrow = number_exec, ncol = 10)
+for (i in 1:number_exec){
   temps[i,]<-microbenchmark(TSPsolve(couts, method = "branch"),
                             times = 10,
                             setup = { n <- seqn[i]
