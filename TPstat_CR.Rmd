@@ -224,11 +224,11 @@ couts <- distance(sommets)
 ## 2.1. Comportement par rapport au nombre de sommets : premier modèle
 
 ```{r, echo=FALSE}
-seq_max <- 24
+seq_max <- 20
 seqn <- seq(4,seq_max,1)
 number_exec <- seq_max-3
 
-temps<-matrix(, nrow = number_exec, ncol = 10)
+temps<-matrix(,nrow = number_exec, ncol = 10)
 for (i in 1:number_exec){
   temps[i,]<-microbenchmark(TSPsolve(couts, method = "branch"),
                             times = 10,
@@ -256,7 +256,11 @@ temps.lm <- lm(vect_temps~vect_dim)
 summary(temps.lm)
 ```
 
-COMMENTER 
+COMMENTER
+
+- on peut voire que log(tmps^2) en fonction de n suit une courbe lineaire (R squareed = 0.8705) du coups le temps est une fonction exponentielle de n i.e la complexite de temps est exponentielle. 
+
+
 
 Analyse de la validité du modèle : 
 
