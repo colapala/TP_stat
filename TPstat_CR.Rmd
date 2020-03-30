@@ -66,7 +66,7 @@ Ceci illustre bien l'intérêt d'un algorithme de voyageur de commerce. Nous all
 
 # 1. Comparaison d'algorithmes
 
-Nombre de sommets fixes et graphes "identiques".
+Dans cette partie, nous souhaitons comparer les méthodes repetitive_nn, nearest_insertion, two_opt, nearest, et branch. Pour cela, nous allons générer des graphes aléatoires de 10 sommets, et tester les longueurs des chemins calculés et le temps de calcul des différentes méthodes.
 
 ```{r, echo=TRUE}
       n <- 10
@@ -76,9 +76,9 @@ sommets <- data.frame(x = runif(n), y = runif(n))
 
 ## 1.1. Longueur des chemins
 
-Comparaison des longueurs de différentes méthodes : 
+Dans un premier temps, nous allons comparer les longueurs des chemins hamiltoniens calculés par les 5 méthodes sur 50 réalisations de graphes aléatoires.
 
-   * boxplots
+   * Représentation de la longueur des chemins hamiltoniens obtenus par différentes méthodes :
    
 ```{r, echo=FALSE}
 cheminRepetitive <- vector()
@@ -111,51 +111,50 @@ boxplot(cheminRepetitive,cheminNearestIns,chemin2Opt,cheminNearest,cheminBranch,
         cex.axis=0.7299
         )
 ```
+L'affichage sous forme de boxplot nous permet de remarquer que :
+   * la méthode branch renvoie le plus souvent un chemin plus court que les autres méthodes
+   * la méthode nearest renvoie le plus souvent un chemin plus long que les autres méthodes
+   * la boîte de la méthode repetitive_nn est moins étendue que les boîtes obtenues par les autres méthodes, ce qui nous permet de constater que 50% des valeurs sont très proches de la valeur médiane
+   * la boîte de la méthode nearest_insertion est plus étendue que les boîtes obtenues par les autres méthodes, ce qui nous permet de constater que 50% des valeurs sont assez étendues autour de la valeur médiane <br/>
+  
+L'affichage obtenu est assez cohérent puisqu'aucune méthode n'a de valeur moyenne complètement absurde par rapport aux autre méthodes.
 
    * test entre 'nearest' et 'branch'
-   - branch plus souvent plus cours 
-   - nearest plus souvent plus long 
-   - repetitive bcp de point proche de la mediane (hauteur carre petite )
-   - insertion sparse data in box 
  
- On souhaite comparer les méthodes des plus proches voisins et Branch&Bound.
- On réalise le test sur l'espérance :
-  (H0) m_nn - m_b <= 0 <=> m_nn<=m_b
-  (H1) m_nn - m_b > 0 <=> m_nn>m_b
-  
-Région critique à 5% :
-  {T > t_n-1;2a}
-  
+On souhaite maintenant comparer les méthodes des plus proches voisins et Branch&Bound.<br/>
+On réalise donc un test sur l'espérance de chaque méthode.<br/>
+Notre hypothèse nulle (H0) est que la moyenne des chemins hamiltoniens obtenus avec la méthode des plus proches voisins est inférieure ou égale à la moyenne des chemins hamiltoniens obtenus avec la méthode Branch&Bound. Notre hypothèse alternative (H1) est que la moyenne des chemins hamiltoniens obtenus avec la méthode des plus proches voisins est supérieure à la moyenne des chemins hamiltoniens obtenus avec la méthode Branch&Bound.<br/>
+  (H0) $m_{nn} - m_b <= 0$    <=>  $m_{nn} <= m_b$ <br/>
+  (H1) $m_{nn} - m_b > 0$     <=> $m_{nn} > m_b$ <br/>
+ 
+Nous allons ensuite tester si au seuil de 5% la moyenne des chemins hamiltoniens obtenus avec la méthode des plus proches voisins est inférieure ou égale à la moyenne des chemins hamiltoniens obtenus avec la méthode Branch&Bound. <br/>
+Pour cela, nous allons faire une comparaison d'échantillons gaussiens appariés.En effet, les deux méthodes étant basées sur les mêmes graphes, les résultats obtenus ne peuvent pas être considérés comme indépéndant.<br/>
+
+On pose $a=0.05$.
+
 ```{r, echo=FALSE}
 n<-50
-m_nn<-mean(cheminNearest)
-s_nn<-var(cheminNearest)
-m_b<-mean(cheminBranch)
-str(cheminBranch)
-str(m_nn)
-str(s_nn)
-str(m_b)
 # risque = 5%
 a<-0.05
 ```
+On obtient une $p_{valeur}$ de :
 ```{r, echo=FALSE}
-print(T)
+t_a <- t.test(cheminBranch,cheminNearest,mu = 0 ,paired=TRUE,altermative="greater")
+print(t_a$p.value)
 ```
 
 
 ```{r, echo=FALSE}
-t_a <- t.test(cheminBranch,cheminNearest,mu = 0 ,paired=TRUE,altermative="greater")
 if(a>t_a$p.value){
-  print("a > t_a")
+  print("p_valeur < a")
   print("On peut rejeter H0")
 } else {
-   print("a <= t_a")
+   print("p_valeur >= a")
    print("On ne peut pas rejeter H0")
 }
 ```
--pvalue petite et  plus petit que alpha 
-On peut rejeter H0, et affirmer avec un risque de 5% que les chemins des plus proches voisins sont en moyenne plus long que ceux de Branch&Bound.
-
+On observe que la $p_{valeur}$ obtenue est strictement inférieure à a. <br/>
+On peut rejeter H0, et affirmer avec un risque de 5% que les chemins hamiltoniens obtenus avec la méthode des plus proches voisins sont en moyenne plus longs que ceux obtenus avec la méthode Branch&Bound.
 
    * tests 2 à 2 
 
