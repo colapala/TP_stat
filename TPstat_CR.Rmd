@@ -297,13 +297,13 @@ On peut en déduire que Branch&Bound semble avoir une complexité temporelle en 
 ### Analyse de la validité du modèle : 
 
 Le modèle nous renvoie une fonction de type: $Y = aX + b + \epsilon$. En effet nous avons les paramètres suivants:   
-$a = 14.7$, $b = 68.6$. Il reste donc a savoir les coéfficients et donc le modèle sont pertinents. Nous allons tous d'abord analyser la pertinence des coefficients puis celle du modèle en géneral.   
+$a = 14.7$, $b = 68.6$. Il reste donc à savoir si les coéfficients et donc le modèle sont pertinents. Nous allons tous d'abord analyser la pertinence des coefficients puis celle du modèle en géneral.   
  * Sois $\alpha = 5\%$
 
-  * L'analyse de $a$, permet d'établir un premier résultat quantifiant la significativité du modèle. En effet nous allons tester la significativité de a via le test statistique: $(H0) : a = 0$ contre $(H1) : a \neq 0$. La p-value de celui-ci ce retrouve dans le tableau summary(temps.lm) et est $2.2e-16$. Nous pouvons donc rejeter $H0$  et affirmer avec 5% de risque que a n'est pas significatif. 
-  * L'analyse de $b$ est la moins importante. Il nous indique seulement l'importance de l'intercept. Le test statistique est analogique à $a$. Ca p-value est aussi $2.2e-16$ Nous pouvons donc rejeter $H0$  et affirmer avec 5% de risque que a n'est pas significatif.  
-  * Nous pouvons maintenant passé a l'analyse des résidus: 
-    * Pour ceci nous allons tous d'abord nous intéréssé a plusieurs graphique:
+  * L'analyse de $a$, permet d'établir un premier résultat quantifiant la significativité du modèle. En effet nous allons tester la significativité de $a$ via le test statistique: $(H0) : a = 0$ contre $(H1) : a \neq 0$. La p-value de celui-ci ce retrouve dans le tableau summary(temps.lm) et est $2.2e-16$. Nous pouvons donc rejeter $H0$  et affirmer avec 5% de risque que a n'est pas significatif. 
+  * L'analyse de $b$ est la moins importante. Il nous indique seulement l'importance de l'intercept. Le test statistique est analogique à $a$. Sa p-value est aussi $2.2e-16$ Nous pouvons donc rejeter $H0$  et affirmer avec 5% de risque que $a$ n'est pas significatif.  
+  * Nous pouvons maintenant passer à l'analyse des résidus: 
+    * Pour ceci nous allons tous d'abord nous intérésser à plusieurs graphique:
 
 ```{r, echo=FALSE}
 par(mfrow=c(2,2)) 
@@ -311,17 +311,17 @@ plot(temps.lm)
 ```
  
  
- * Residuals vs Fitted: La courbe n'est pas complètement horizontal. Il y'a donc un léger effet d'échelle. 
+ * Residuals vs Fitted: La courbe n'est pas complètement horizontale. Il y'a donc un léger effet d'échelle. 
  * Normal Q-Q: les points sont proches de la bissectrice, la distribution des résidus est donc similaire à la distribution normale. Nous voyons une légère séparation au niveau des queues des distribution. 
- * Scale Location: cette courbe représente la meme chose que la première seulement avec dles résisu normalisé. On remarque que la courbe est bien honrizontal que le léger effet d'échelle disparait. 
- * Pour la distance de cook nous avons préfére prendre le graphique suivant: Nous voyons qu'aucun résidu a une distance plus grande que 0.05 et que la plus part on une distance inferieure a 0.01. Ceci indique que le bon fit du modèle.
+ * Scale Location: cette courbe représente la même chose que la première seulement avec des résisus normalisés. On remarque que la courbe est bien honrizontale et que le léger effet d'échelle disparaît. 
+ * Pour la distance de cook nous avons préféré prendre le graphique suivant: Nous voyons qu'aucun résidu a une distance plus grande que 0.05 et que la plupart ont une distance inferieure à 0.01. Ceci montre que le modèle est bien choisi.
  
  
 ```{r, echo=FALSE}
 plot(temps.lm,which=4)
 ```
 
-  * Il est aussi possible d'éffectuer un test statistique sur les résidus. En effet s'ils suivent une loi normale ceci indique le bon fit du modèle. 
+  * Il est aussi possible d'éffectuer un test statistique sur les résidus. En effet le fait qu'ils suivent une loi normale indique la qualité du modèle. 
   * Définissons: 
     * $(H0)$ les résidus suivent une loi normale
     * $(H1)$ les résidus ne suivent pas une loi normale
@@ -344,11 +344,11 @@ if(shapiroTest$p.value < alpha){
   print("On ne peut pas rejeter H0")
 }
 ```
-On ne peut pas rejetter H0, donc nous pouvons affirmer que les résidusne suivent une loi normale. Ce qui indique un modèle pertinent. 
+On ne peut pas rejetter H0, donc nous pouvons affirmer avec un risque de 5% que les résidus ne suivent pas une loi normale. Ce qui indique un modèle pertinent. 
 
 
 ## 2.2. Comportement par rapport au nombre de sommets : étude du comportement moyen
-L'explication des résultats étants similaire a 2.1, nous allons simplement afficher nos résultats.  
+L'explication des résultats étant similaire à 2.1, nous allons simplement afficher nos résultats.  
 Récupération du temps moyen.
 
 ```{r, echo=FALSE}
@@ -376,16 +376,16 @@ plot(temps.lm_moy)
 ```
 
  
- * Residuals vs Fitted: La courbe n'est pas du tou  horizontal. Il y'a donc un important effet d'échelle. 
+ * Residuals vs Fitted: La courbe n'est pas du tout horizontale. Il y'a donc un important effet d'échelle. 
  * Normal Q-Q: Les distributions sont identiques.
- * Scale Location: L'effet d'échelle disparait. Le nuage de point est sans structure. Ce qui indique la qualité du modèle. 
+ * Scale Location: L'effet d'échelle disparait. Le nuage de points est sans structure. Ce qui indique la qualité du modèle. 
 
   
-  * Il est aussi possible d'éffectuer un test statistique sur les résidus. En effet s'ils suivent une loi normale ceci indique le bon fit du modèle. 
+  * Il est aussi possible d'effectuer un test statistique sur les résidus. En effet le fait q'ils suivent une loi normale indique le bon fit du modèle. 
   * Définissons: 
     *$(H0)$ les résidus suivent une loi normale
     *$(H1)$ les résidus ne suivent pas une loi normale
-  * Pour tester ceci nous pouvons efféctuer un test de shapiro. 
+  * Pour tester ceci nous pouvons effectuer un test de shapiro. 
   
 (H0) les résidus suivent une loi normale
 (H1) les résidus ne suivent pas une loi normale
@@ -408,7 +408,7 @@ if(shapiroTest_moy$p.value < alpha){
   print("On ne peut pas rejeter H0")
 }
 ```
-On ne peut rejetter H0, donc nous pouvons affirmer que les résidus suivent une loi normale. Ce qui indique un modèle pertinent. 
+On ne peut rejetter H0, donc nous pouvons affirmer avec un risque de 5% que les résidus suivent une loi normale. Ce qui indique un modèle pertinent. 
 
 ## 2.3. Comportement par rapport à la structure du graphe
 
