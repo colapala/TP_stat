@@ -3,9 +3,9 @@ title: "TP Statistique"
 author: "Cédric Milinaire, Corentin Laharotte"
 date: "4 avril 2020"
 output:
+  pdf_document: default
   html_document:
     df_print: paged
-  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -276,24 +276,37 @@ COMMENTER
 
 Analyse de la validité du modèle : 
 
-  * pertinence des coefficients et du modèle
+Le modèle nous renvoie une fonction de type: $Y = aX + b + \epsilon$. En effet nous avons les paramètres suivants: 
+$a = 14.7$, $b = 68.6$. Il reste donc a savoir les coéfficients et donc le modèle sont pertinents. Nous allons tous d'abord analyser la pertinence des coefficients puis celle du modèle en géneral. 
+
+  * L'analyse de $a$, permet d'établir un premier résultat quantifiant la significativité du modèle. En effet nous allons tester la significativité de a via le test statistique: $(H0) : a = 0$ contre $(H1) : a \neq 0$. La p-value de celui-ci ce retrouve dans le tableau summary(temps.lm) et est $2.2e-16$. Nous sommes donc capable d'affiirmer avec un risque de  de moins que 0.1% (chiffre arbitraire plus grand que $2.2e-14$ )  que $a$ est significatif.  
+  * L'analyse de $b$ est la moins importante. Il nous indique seulement l'importance de l'intercept. Le test statistique est analogique à $a$. Ca p-value est aussi $2.2e-16$ Nous sommes donc capable d'affiirmer avec un risque de  de moins que 0.1% (chiffre arbitraire plus grand que $2.2e-14$ )  que l'intercept est utile.  
+  * Nous pouvons maintenant passé a l'analyse des résidus: 
+    * Pour ceci nous allons tous d'abord nous intéréssé a plusieurs graphique:
 
 ```{r, echo=FALSE}
 par(mfrow=c(2,2)) 
 plot(temps.lm)
 ```
-  
-COMMENTER
-  
-  * étude des hypothèses sur les résidus.
-  
-  PAS SUR QUE LE PARAMETRE SOIT temps.lm
+ 
+ 
+ *Residuals vs Fitted: La courbe n'est pas complètement horizontal. Il y'a donc un léger effet d'échelle. 
+ * Normal Q-Q: les points sont proches de la bissectrice, la distribution des résidus est donc similaire à la distribution normale. Nous voyons une légère séparation au niveau des queues des distribution. 
+ *Scale Location: cette courbe représente la meme chose que la première seulement avec dles résisu normalisé. On remarque que la courbe est bien honrizontal que le léger effet d'échelle disparait. 
+ *Pour la distance de cook nous avons préfére prendre le graphique suivant: Nous voyons qu'aucun résidu a une distance plus grande que 0.05 et que la plus part on une distance inferieure a 0.01. Ceci indique que le bon fit du modèle.
+ 
+ 
+```{r, echo=FALSE}
+plot(temps.lm,which=4)
+```
 
-(H0) les résidus suivent une loi normale
-(H1) les résidus ne suivent pas une loi normale
-
-On prend un risque alpha=5%
+  * Il est aussi possible d'éffectuer un test statistique sur les résidus. En effet s'ils suivent une loi normale ceci indique le bon fit du modèle. 
+  * Définissons: 
+    *$(H0)$ les résidus suivent une loi normale
+    *$(H1)$ les résidus ne suivent pas une loi normale
+  * Pour tester ceci nous pouvons efféctuer un test de shapiro. 
   
+
 ```{r, echo=FALSE}
 shapiroTest<-shapiro.test(residuals(temps.lm))
 print(shapiroTest)
@@ -310,13 +323,11 @@ if(shapiroTest$p.value < alpha){
   print("On ne peut pas rejeter H0")
 }
 ```
-On rejette H0, donc nous pouvons affirmer que les résidus ne suivent pas une loi normale.
+On ne peut rejetter H0, donc nous pouvons affirmer que les résidusne suivent une loi normale. Ce qui indique un modèle pertinent. 
 
-```{r, echo=FALSE}
-plot(temps.lm,which=4)
-```
 
 ## 2.2. Comportement par rapport au nombre de sommets : étude du comportement moyen
+
 
 Récupération du temps moyen.
 
