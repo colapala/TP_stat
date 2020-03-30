@@ -32,7 +32,7 @@ Voici le plan de ce qui sera fait dans le TP.
 
 Lecture du fichier des villes :
 
-```{r, echo=TRUE}
+```{r, echo=FALSE}
 villes <- read.csv('DonneesGPSvilles.csv',header=TRUE,dec='.',sep=';',quote="\"")
 str(villes)
 ```
@@ -104,12 +104,14 @@ for (i in 1:50){
 }
 
 boxplot(cheminRepetitive,cheminNearestIns,chemin2Opt,cheminNearest,cheminBranch,
-        main="longueur des chemins hamiltoniens donnés par 5 méthodes",
+        main="Longueur des chemins hamiltoniens donnés par 5 méthodes",
         names=c("repetitive_nn","nearest_insertion", "two_opt", "nearest", "branch"),
         cex.axis=0.7299
         )
 ```
-\\L'affichage sous forme de boxplot nous permet de remarquer que :
+
+
+L'affichage sous forme de boxplot nous permet de remarquer que :
 
 - la méthode branch renvoie le plus souvent un chemin plus court que les autres méthodes
 - la méthode nearest renvoie le plus souvent un chemin plus long que les autres méthodes
@@ -125,8 +127,8 @@ On réalise donc un test sur l'espérance de chaque méthode.
   
 Notre hypothèse nulle (H0) est que la moyenne des chemins hamiltoniens obtenus avec la méthode des plus proches voisins est inférieure ou égale à la moyenne des chemins hamiltoniens obtenus avec la méthode Branch&Bound. Notre hypothèse alternative (H1) est que la moyenne des chemins hamiltoniens obtenus avec la méthode des plus proches voisins est supérieure à la moyenne des chemins hamiltoniens obtenus avec la méthode Branch&Bound. 
   
-  (H0) $m_{nn} - m_b <= 0$    <=>  $m_{nn} <= m_b$   
-  (H1) $m_{nn} - m_b > 0$     <=> $m_{nn} > m_b$   
+  $(H_0)\ m_{nn} - m_b \leq 0 \Leftrightarrow  m_{nn} \leq m_b$   
+  $(H_1)\ m_{nn} - m_b > 0       \Leftrightarrow m_{nn} > m_b$   
  
 Nous allons ensuite tester si au seuil de 5% la moyenne des chemins hamiltoniens obtenus avec la méthode des plus proches voisins est inférieure ou égale à la moyenne des chemins hamiltoniens obtenus avec la méthode Branch&Bound.   
 Pour cela, nous allons faire une comparaison d'échantillons gaussiens appariés. En effet, les deux méthodes étant basées sur les mêmes graphes, les résultats obtenus ne peuvent pas être considérés comme indépéndant.  
@@ -157,16 +159,16 @@ if(a>t_a$p.value){
 On observe que la $p_{valeur}$ obtenue est strictement inférieure à a.   
 On peut rejeter H0, et affirmer avec un risque de 5% que la moyenne des chemins hamiltoniens obtenus avec la méthode des plus proches voisins est supérieure à la moyenne des chemins hamiltoniens obtenus avec la méthode de Branch&Bound.
 
-### tests 2 à 2 
+### Tests 2 à 2 
 On souhaite maintenant comparer 2 à 2 les longueurs moyennes des chemins hamiltoniens obtenus par les 5 méthodes vues précédemment.  
   
 On réalise donc un test sur l'espérance de chaque méthode.   
 Soit i, j deux méthodes différentes .Notre hypothèse nulle (H0) est que la moyenne des chemins hamiltoniens obtenus avec la méthode i est égale à la moyenne des chemins hamiltoniens obtenus avec la méthode j. Notre hypothèse alternative (H1) est que la moyenne des chemins hamiltoniens obtenus avec la méthode i est différente de la moyenne des chemins hamiltoniens obtenus avec la méthode j.  
   
-(H0) $mi=mj$   
-(H1) $mi!=mj$   
+$(H_0) mi=mj$   
+$(H_1) mi \neq mj$   
 
-Nous avons lancé 10 tests simultanés, et obtenus les résulats suivants :   
+Nous avons lancé 10 tests simultanés, et obtenus les résulats suivants:   
   
 ```{r, echo=FALSE}
 methodsRepetitive <- vector()
@@ -190,7 +192,7 @@ pairwise.t.test(results,methods,adjust.method="bonferroni")
 ```
 Nous allons tester si au seuil de 5%, notre hypothèse H0 est vérifiée.     
 
-Si on accepte un risque alpha=5%, on rejette notre hypothèse nulle (H0) si la $p_{valeur}$ obtenue à l'indice [i,j] est inférieure à alpha.   
+Si on accepte un risque alpha=5%, on rejette notre hypothèse nulle ($H_0$) si la $p_{valeur}$ obtenue à l'indice [i,j] est inférieure à alpha.   
 Donc, si la valeur à l'indice [i,j] est inférieure à alpha, nous pouvons affirmer avec un risque de 5% que la moyenne des chemins hamiltoniens obtenus avec la méthode i est différente de celle obtenue avec la méthode j.  
 
 En appliquant ce principe à nos résultats, nous pouvons dire que :
@@ -207,10 +209,10 @@ Nous souhaitons maintenant comparer les temps d'éxécution des différentes mé
 Nous avons utilisé la fonction benchmark pour réaliser des statistiques d'exécution pour chaque méthode.   
   
 Nous avons réalisé des tests sur les temps moyens d'exécution de chaque méthode :   
-Soit i, j deux méthodes différentes .Notre hypothèse nulle (H0) est que le temps moyen d'exécution de la méthode i est égale au temps moyen d'exécution de la méthode j. Notre hypothèse alternative (H1) est que le temps moyen d'exécution de la méthode i est différent du temps moyen d'exécution de la méthode j.  
+Soit i, j deux méthodes différentes .Notre hypothèse nulle $H_0$ est que le temps moyen d'exécution de la méthode i est égale au temps moyen d'exécution de la méthode j. Notre hypothèse alternative ($H_1$) est que le temps moyen d'exécution de la méthode i est différent du temps moyen d'exécution de la méthode j.  
 
-(H0) $mi=mj$   
-(H1) $mi!=mj$
+$(H_0) mi=mj$   
+$(H_1) mi!=mj$
   
 Le résultat de ces tests est représenté par une lettre dans la colonne cld du tableau ci-dessous. Une même lettre est attribuée aux méthodes pour lequelles H0 n'est pas rejetée. Les lettres sont classées par ordre croissant de temps d'exécution, ainsi un algorithme classé 'a' est plus rapide qu'un algoriyhme classé 'b', etc ...  
 Deux méthodes ayant des lettres différentes ont donc des temps d'exécution moyens différents.  
@@ -260,7 +262,7 @@ for (i in 1:number_exec){
 ```
 
 ### Création du modèle linéaire
-Dans un premier temps nous allons créer une matrice temps calculant les temps mis par l'algorithme Branch&Bound pour calculer les chemins hamiltoniens sur un graphe de $n$ sommets généré aléatoirement. Nous réalisons 10 fois l'algorithme sur un graphe à $n$ sommets, et nous faisons varier $n$ de 4 à 20. La matrice obtenue est donc de dimension 17*10.  
+Dans un premier temps nous allons créer une matrice temps calculant les temps mis par l'algorithme Branch&Bound pour calculer les chemins hamiltoniens sur un graphe de $n$ sommets généré aléatoirement. Nous réalisons 10 fois l'algorithme sur un graphe à $n$ sommets, et nous faisons varier $n$ de 4 à 20. La matrice obtenue est donc de dimension $17*10$.  
   
 A l'aide de ces données, nous pouvons afficher le graphe du temps mis par l'algorithme en fonction du nombre de noeuds du graphe, et le graphe de $\log(temps)^2$ en fonction nombre de noeuds du graphe. Cela nous donne les résultats ci-dessous.
 
@@ -271,7 +273,7 @@ matplot(seqn, log(temps)^2, xlab="n", ylab=expression(log(temps)^2))
 ```
 Le graphe du temps mis par l'algorithme en fonction du nombre de noeuds du graphe semble suivre une courbe exponentielle. Cette hypothèse est soutenue par le 2ème graphe.  
   
-Nous avons ensuite ajusté le modèle linéaire de $\log(temps)²$ en fonction de $n$, pour en récupérer les principales charactéristiques. Nous avons obtenu le résultat suivant :  
+Nous avons ensuite ajusté le modèle linéaire de $\log(temps)^2$ en fonction de $n$, pour en récupérer les principales charactéristiques. Nous avons obtenu le résultat suivant :  
 
 ```{r, echo=FALSE}
 vect_temps <- log(as.vector(temps))^2
@@ -285,7 +287,7 @@ De plus, $R^2$ =
 ```{r, echo=FALSE}
 summary(temps.lm)$r.squared
 ```
-$R²$ étant proche de 1, une grande partie des données suivent le modéle linéaire. On peut donc en conclure qu'il y a une relation linéaire entre $\log(temps)²$ et $n$.  
+$R²$ étant proche de 1, une grande partie des données suivent le modéle linéaire. On peut donc en conclure qu'il y a une relation linéaire entre $\log(temps)^2$ et $n$.  
   
 De ce fait, on peut en déduire que :   
 $\exists \alpha, \beta$ tels que $\log(temps)²=\alpha*n+\beta$   
@@ -300,7 +302,7 @@ Le modèle nous renvoie une fonction de type: $Y = aX + b + \epsilon$. En effet 
 $a = 14.7$, $b = 68.6$. Il reste donc à savoir si les coéfficients et donc le modèle sont pertinents. Nous allons tous d'abord analyser la pertinence des coefficients puis celle du modèle en géneral.   
  * Sois $\alpha = 5\%$
 
-  * L'analyse de $a$, permet d'établir un premier résultat quantifiant la significativité du modèle. En effet nous allons tester la significativité de $a$ via le test statistique: $(H0) : a = 0$ contre $(H1) : a \neq 0$. La p-value de celui-ci ce retrouve dans le tableau summary(temps.lm) et est $2.2e-16$. Nous pouvons donc rejeter $H0$  et affirmer avec 5% de risque que a n'est pas significatif. 
+  * L'analyse de $a$, permet d'établir un premier résultat quantifiant la significativité du modèle. En effet nous allons tester la significativité de $a$ via le test statistique: $(H_0) : a = 0$ contre $(H_1) : a \neq 0$. La p-value de celui-ci ce retrouve dans le tableau summary(temps.lm) et est $2.2e-16$. Nous pouvons donc rejeter $H0$  et affirmer avec 5% de risque que a n'est pas significatif. 
   * L'analyse de $b$ est la moins importante. Il nous indique seulement l'importance de l'intercept. Le test statistique est analogique à $a$. Sa p-value est aussi $2.2e-16$ Nous pouvons donc rejeter $H0$  et affirmer avec 5% de risque que $a$ n'est pas significatif.  
   * Nous pouvons maintenant passer à l'analyse des résidus: 
     * Pour ceci nous allons tous d'abord nous intérésser à plusieurs graphique:
@@ -344,7 +346,7 @@ if(shapiroTest$p.value < alpha){
   print("On ne peut pas rejeter H0")
 }
 ```
-On ne peut pas rejetter H0, donc nous pouvons affirmer avec un risque de 5% que les résidus ne suivent pas une loi normale. Ce qui indique un modèle pertinent. 
+On ne peut pas rejetter $H_0$, donc nous pouvons affirmer avec un risque de 5% que les résidus ne suivent pas une loi normale. Ce qui indique un modèle pertinent. 
 
 
 ## 2.2. Comportement par rapport au nombre de sommets : étude du comportement moyen
@@ -383,8 +385,8 @@ plot(temps.lm_moy)
   
   * Il est aussi possible d'effectuer un test statistique sur les résidus. En effet le fait q'ils suivent une loi normale indique le bon fit du modèle. 
   * Définissons: 
-    *$(H0)$ les résidus suivent une loi normale
-    *$(H1)$ les résidus ne suivent pas une loi normale
+    * $(H0)$ les résidus suivent une loi normale
+    * $(H1)$ les résidus ne suivent pas une loi normale
   * Pour tester ceci nous pouvons effectuer un test de shapiro. 
   
 (H0) les résidus suivent une loi normale
