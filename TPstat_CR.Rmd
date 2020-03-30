@@ -116,9 +116,9 @@ L'affichage sous forme de boxplot nous permet de remarquer que :
 - la boîte de la méthode repetitive_nn est moins étendue que les boîtes obtenues par les autres méthodes, ce qui nous permet de constater que 50% des valeurs sont très proches de la valeur médiane
 - la boîte de la méthode nearest_insertion est plus étendue que les boîtes obtenues par les autres méthodes, ce qui nous permet de constater que 50% des valeurs sont assez étendues autour de la valeur médiane   
     
-L'affichage obtenu est assez cohérent puisqu'aucune méthode n'a de valeur moyenne complètement absurde par rapport aux autre méthodes.
+L'affichage obtenu est assez cohérent puisqu'aucune méthode n'a de valeur médiane complètement absurde par rapport aux autre méthodes.
 
-### test entre 'nearest' et 'branch'
+### Test entre 'nearest' et 'branch'
  
 On souhaite maintenant comparer les méthodes des plus proches voisins et Branch&Bound.  
 On réalise donc un test sur l'espérance de chaque méthode.  
@@ -129,7 +129,7 @@ Notre hypothèse nulle (H0) est que la moyenne des chemins hamiltoniens obtenus 
   (H1) $m_{nn} - m_b > 0$     <=> $m_{nn} > m_b$   
  
 Nous allons ensuite tester si au seuil de 5% la moyenne des chemins hamiltoniens obtenus avec la méthode des plus proches voisins est inférieure ou égale à la moyenne des chemins hamiltoniens obtenus avec la méthode Branch&Bound.   
-Pour cela, nous allons faire une comparaison d'échantillons gaussiens appariés.En effet, les deux méthodes étant basées sur les mêmes graphes, les résultats obtenus ne peuvent pas être considérés comme indépéndant.  
+Pour cela, nous allons faire une comparaison d'échantillons gaussiens appariés. En effet, les deux méthodes étant basées sur les mêmes graphes, les résultats obtenus ne peuvent pas être considérés comme indépéndant.  
 
 On pose $a=0.05$.
 
@@ -155,7 +155,7 @@ if(a>t_a$p.value){
 }
 ```
 On observe que la $p_{valeur}$ obtenue est strictement inférieure à a.   
-On peut rejeter H0, et affirmer avec un risque de 5% que la moyenne des chemins hamiltoniens obtenus avec la méthode des plus proches voisins n'est pas inférieure à la moyenne des chemins hamiltoniens obtenus avec la méthode de Branch&Bound.
+On peut rejeter H0, et affirmer avec un risque de 5% que la moyenne des chemins hamiltoniens obtenus avec la méthode des plus proches voisins est supérieure à la moyenne des chemins hamiltoniens obtenus avec la méthode de Branch&Bound.
 
 ### tests 2 à 2 
 On souhaite maintenant comparer 2 à 2 les longueurs moyennes des chemins hamiltoniens obtenus par les 5 méthodes vues précédemment.  
@@ -204,7 +204,7 @@ Pour les autres méthodes, nous ne pouvons pas rejeter l'hypothèse d'après laq
 
 Nous souhaitons maintenant comparer les temps d'éxécution des différentes méthodes de calcul de longueur de chemin hamiltonien sur 20 graphes de 10 sommets générés aléatoirement.  
 
-Nous avons utilisé la focntion benchmark pour réaliser des statistiques d'exécution pour chaque méthode.   
+Nous avons utilisé la fonction benchmark pour réaliser des statistiques d'exécution pour chaque méthode.   
   
 Nous avons réalisé des tests sur les temps moyens d'exécution de chaque méthode :   
 Soit i, j deux méthodes différentes .Notre hypothèse nulle (H0) est que le temps moyen d'exécution de la méthode i est égale au temps moyen d'exécution de la méthode j. Notre hypothèse alternative (H1) est que le temps moyen d'exécution de la méthode i est différent du temps moyen d'exécution de la méthode j.  
@@ -212,7 +212,7 @@ Soit i, j deux méthodes différentes .Notre hypothèse nulle (H0) est que le te
 (H0) $mi=mj$   
 (H1) $mi!=mj$
   
-Le résultat de ces tests est représenté par une lettre dans la colonne cld du tableau ci-dessous. Une même lettre est attribuée aux méthodes pour lequelles H0 n'est pas rejetée. Les lettres sont classées par ordre croissant de temps d'exécution, ainsi un algorithme classé 'a' est plus rapide qu'un algoriyhme classé 'b'.  
+Le résultat de ces tests est représenté par une lettre dans la colonne cld du tableau ci-dessous. Une même lettre est attribuée aux méthodes pour lequelles H0 n'est pas rejetée. Les lettres sont classées par ordre croissant de temps d'exécution, ainsi un algorithme classé 'a' est plus rapide qu'un algoriyhme classé 'b', etc ...  
 Deux méthodes ayant des lettres différentes ont donc des temps d'exécution moyens différents.  
 
 ```{r, echo=FALSE}
@@ -225,7 +225,7 @@ microbenchmark(TSPsolve(couts,"repetitive_nn"), TSPsolve(couts,"nearest_insertio
                 }
             )
 ```
-Nous pouvons remarquer que les méthodes nearest_insertion, two_opt et nearest ont un temps d'exécution moyen similaires. Les méthodes sont classées 'a', ce qui montre que ce sont les méthodes les plus rapides des 5 méthodes proposées. De plus, les 3 méthodes ayant le même classement, on ne peut pas rejeter le fait que les temps moyens d'exécution de ces méthode sont équivalents. Il n'a, en tout cas, pas été mis en évidence que ces méthodes avaient des temps d'exécution significativement différents.     
+Nous pouvons remarquer que les méthodes nearest_insertion, two_opt et nearest ont des temps d'exécution moyens similaires. Les méthodes sont classées 'a', ce qui montre que ce sont les méthodes les plus rapides des 5 méthodes proposées. De plus, les 3 méthodes ayant le même classement, on ne peut pas rejeter le fait que les temps moyens d'exécution de ces méthode sont équivalents. Il n'a, en tout cas, pas été mis en évidence que ces méthodes avaient des temps d'exécution significativement différents.     
 Les méthodes repetitive_nn et branch ont une durée d'exécution moyenne supérieure aux autres.
   
 La méthode repetitive_nn est classée 'c', ce qui fait que l'on peut affirmer que le temps moyen d'exécution de cette méthode est différent du temps moyen d'exécution des autres méthodes. De plus, comme les lettres {a, b, c, ...} sont attribuées en fonction du temps d'exécution ('a' pour la plus rapide, ...), on peut en déduire que le temps moyen d'exécution de repetitive_nn est plus important que le temps moyens des autres méthodes.  
@@ -234,7 +234,7 @@ Par la même réflexion que celle faite précédemment, nous pouvons remarquer q
 
 # 2. Etude de la complexité de l'algorithme Branch and Bound
 
-Nous intéressons désormais à l'algorithme Branch&Bound. Nous allons étudier sa complexité en fonction du graphe sur lequel il est appliqué.  
+Nous nous intéressons désormais à l'algorithme Branch&Bound. Nous allons étudier sa complexité en fonction du graphe sur lequel il est appliqué.  
 
 ```{r, echo=FALSE}
 n <- 10
@@ -260,7 +260,7 @@ for (i in 1:number_exec){
 ```
 
 ### Création du modèle linéaire
-Dans un premier temps nous allons créer une matrice temps calculant les temps mis par l'algorithme Branch&Bound pour calculer les chemins hamiltoniens sur un graphe de $n$ sommets généré aléatoirement. Nous réalisons 10 fois l'algorithme sur un graphe à $sommets$, et nous faisons varier $n$ de 4 à 20. La matrice obtenue est donc de dimension 17*10.  
+Dans un premier temps nous allons créer une matrice temps calculant les temps mis par l'algorithme Branch&Bound pour calculer les chemins hamiltoniens sur un graphe de $n$ sommets généré aléatoirement. Nous réalisons 10 fois l'algorithme sur un graphe à $n$ sommets, et nous faisons varier $n$ de 4 à 20. La matrice obtenue est donc de dimension 17*10.  
   
 A l'aide de ces données, nous pouvons afficher le graphe du temps mis par l'algorithme en fonction du nombre de noeuds du graphe, et le graphe de $\log(temps)²$ en fonction nombre de noeuds du graphe. Cela nous donne les résultats ci-dessous.
 
@@ -271,7 +271,7 @@ matplot(seqn, log(temps)^2, xlab="n", ylab=expression(log(temps)^2))
 ```
 Le graphe du temps mis par l'algorithme en fonction du nombre de noeuds du graphe semble suivre une courbe exponentielle. Cette hypothèse est soutenue par le 2ème graphe.  
   
-Nous avons ensuite ajusté le modèle linéaire de $\log(temps)²$ en fonction de $n$, pour en récupérer principales charactéristiques. Nous avons obtenu le résultat suivant :  
+Nous avons ensuite ajusté le modèle linéaire de $\log(temps)²$ en fonction de $n$, pour en récupérer les principales charactéristiques. Nous avons obtenu le résultat suivant :  
 
 ```{r, echo=FALSE}
 vect_temps <- log(as.vector(temps))^2
