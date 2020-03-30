@@ -393,8 +393,7 @@ if(shapiroTest_moy$p.value < alpha){
   print("On ne peut pas rejeter H0")
 }
 ```
-On ne peut pas rejeter H0. Donc on peut assurer avec un risque de 5% que les résidus suivent une loi normale. Ceci valide donc le modèle. 
-
+On ne peut rejetter H0, donc nous pouvons affirmer que les résidus suivent une loi normale. Ce qui indique un modèle pertinent. 
 
 ## 2.3. Comportement par rapport à la structure du graphe
 
@@ -405,22 +404,30 @@ data.graph <- data.frame(read.csv('DonneesTSP.csv'))
 data.graph$dim<-sqrt(data.graph$dim)
 str(data.graph)
 ```
-
-
-
+ * D'après nous les variables non pertinentes sont: diameter, mean.dist, sd.dist, mean.long. En effet tous ces variables s'intérèssent seulement aux couts des arretes. Ces derniers n'ont pas d'importance dans le temps de calcul (calculer le chemin avec une arrete de 5 ou dfe 1000 reviens a la meme chose). 
 
 Ajustement du modèle linéaire de $\log(temps.moy)^2$ en fonction de toutes les variables présentes. Modèle sans constante.
 
 ```{r, echo=TRUE}
 model.complete <- lm(log(tps)~., data = data.graph)
+summary(model.complete)
 ```
-
 
 
 ```{r, echo=TRUE}
 (step(model.complete))
 ```
 
+* La variable diameter à été supprimé du modèle. Il reste sd.di, mean.dist et mean.long. Qui nous apparaissent peut pertinente. 
+
+```{r, echo=TRUE}
+new_model <- lm(formula = log(tps) ~ dim + mean.long + mean.dist + sd.dist + 
+    mean.deg + sd.deg, data = data.graph)
+summary(new_model)
+```
+
+
+ * D'après le test de fisher le modèle est pertinent ($p_{value}  =2.2*10^{-16}$)
 
 
 
@@ -431,7 +438,18 @@ new_model <- lm(formula = log(tps) ~ dim + mean.long + mean.dist + sd.dist +
 shapiroTest_aic<-shapiro.test(residuals(new_model))
 print(shapiroTest_aic)
 ```
-
+```{r, echo=FALSE}
+#risque 5%
+alpha=0.05
+if(shapiroTest_moy$p.value < alpha){
+  print("p-valeur < alpha")
+  print("On peut rejeter H0")
+}else{
+  print("p-valeur >= alpha")
+  print("On ne peut pas rejeter H0")
+}
+```
+On ne peut pas rejetter H0, donc nous pouvons affirmer que les résidus suivent une loi normale. Ce qui indique un modèle pertinent. 
 
 
 Mise en \oe uvre d'une sélection de variables pour ne garder que les variables pertinentes.
