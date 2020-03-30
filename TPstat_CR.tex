@@ -1,0 +1,809 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={TP Statistique},
+  pdfauthor={Cédric Milinaire, Corentin Laharotte},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+
+\title{TP Statistique}
+\author{Cédric Milinaire, Corentin Laharotte}
+\date{4 avril 2020}
+
+\begin{document}
+\maketitle
+
+Voici le plan de ce qui sera fait dans le TP. \toc \# 0. Visualisation
+de chemins
+
+Lecture du fichier des villes :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{villes \textless{}{-}}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{\textquotesingle{}DonneesGPSvilles.csv\textquotesingle{}}\NormalTok{,}\DataTypeTok{header=}\OtherTok{TRUE}\NormalTok{,}\DataTypeTok{dec=}\StringTok{\textquotesingle{}.\textquotesingle{}}\NormalTok{,}\DataTypeTok{sep=}\StringTok{\textquotesingle{};\textquotesingle{}}\NormalTok{,}\DataTypeTok{quote=}\StringTok{"}\CharTok{\textbackslash{}"}\StringTok{"}\NormalTok{)}
+\KeywordTok{str}\NormalTok{(villes)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 'data.frame':    22 obs. of  5 variables:
+##  $ EU_circo : Factor w/ 7 levels "Centre","Est",..: 6 6 4 2 7 4 2 1 2 4 ...
+##  $ region   : Factor w/ 22 levels "Alsace","Aquitaine",..: 22 9 19 10 2 4 8 3 5 17 ...
+##  $ ville    : Factor w/ 22 levels "Ajaccio","Amiens",..: 11 1 2 3 4 5 6 7 8 9 ...
+##  $ latitude : num  45.7 41.9 49.9 47.2 44.8 ...
+##  $ longitude: num  4.847 8.733 2.3 6.033 -0.567 ...
+\end{verbatim}
+
+Représentation des chemins par plus proches voisins et du chemin optimal
+:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{coord \textless{}{-}}\StringTok{ }\KeywordTok{cbind}\NormalTok{(villes}\OperatorTok{$}\NormalTok{longitude,villes}\OperatorTok{$}\NormalTok{latitude)}
+\NormalTok{dist \textless{}{-}}\StringTok{ }\KeywordTok{distanceGPS}\NormalTok{(coord)}
+\NormalTok{voisins \textless{}{-}}\StringTok{ }\KeywordTok{TSPnearest}\NormalTok{(dist)}
+
+\NormalTok{pathOpt \textless{}{-}}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{8}\NormalTok{,}\DecValTok{9}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{21}\NormalTok{,}\DecValTok{13}\NormalTok{,}\DecValTok{7}\NormalTok{,}\DecValTok{10}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{17}\NormalTok{,}\DecValTok{16}\NormalTok{,}\DecValTok{20}\NormalTok{,}\DecValTok{6}\NormalTok{,}\DecValTok{19}\NormalTok{,}\DecValTok{15}\NormalTok{,}\DecValTok{18}\NormalTok{,}\DecValTok{11}\NormalTok{,}\DecValTok{5}\NormalTok{,}\DecValTok{22}\NormalTok{,}\DecValTok{14}\NormalTok{,}\DecValTok{12}\NormalTok{,}\DecValTok{2}\NormalTok{)}
+
+\KeywordTok{par}\NormalTok{(}\DataTypeTok{mfrow=}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{),}\DataTypeTok{mar=}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{1}\NormalTok{))}
+\KeywordTok{plotTrace}\NormalTok{(coord[voisins}\OperatorTok{$}\NormalTok{chemin,], }\DataTypeTok{title=}\StringTok{\textquotesingle{}Plus proches voisins\textquotesingle{}}\NormalTok{)}
+\KeywordTok{plotTrace}\NormalTok{(coord[pathOpt,], }\DataTypeTok{title=}\StringTok{\textquotesingle{}Chemin optimal\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{TPstat_CR_files/figure-latex/unnamed-chunk-2-1.pdf}
+
+Les longueurs des trajets (à vol d'oiseau) valent respectivement, pour
+la méthode des plus proches voisins :
+
+\begin{verbatim}
+## [1] 4303.568
+\end{verbatim}
+
+et pour la méthode optimale :
+
+\begin{verbatim}
+## [1] 3793.06
+\end{verbatim}
+
+Ceci illustre bien l'intérêt d'un algorithme de voyageur de commerce.
+Nous allons dans la suite étudier les performances de cet algorithme.
+
+\hypertarget{comparaison-dalgorithmes}{%
+\section{1. Comparaison d'algorithmes}\label{comparaison-dalgorithmes}}
+
+Dans cette partie, nous souhaitons comparer les méthodes repetitive\_nn,
+nearest\_insertion, two\_opt, nearest, et branch. Pour cela, nous allons
+générer des graphes aléatoires de 10 sommets, et tester les longueurs
+des chemins calculés et le temps de calcul des différentes méthodes.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{      n \textless{}{-}}\StringTok{ }\DecValTok{10}
+\NormalTok{sommets \textless{}{-}}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{x =} \KeywordTok{runif}\NormalTok{(n), }\DataTypeTok{y =} \KeywordTok{runif}\NormalTok{(n))}
+\NormalTok{  couts \textless{}{-}}\StringTok{ }\KeywordTok{distance}\NormalTok{(sommets)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{longueur-des-chemins}{%
+\subsection{1.1. Longueur des chemins}\label{longueur-des-chemins}}
+
+Dans un premier temps, nous allons comparer les longueurs des chemins
+hamiltoniens calculés par les 5 méthodes sur 50 réalisations de graphes
+aléatoires.
+
+\hypertarget{repruxe9sentation-de-la-longueur-des-chemins-hamiltoniens-obtenus-par-diffuxe9rentes-muxe9thodes}{%
+\subsubsection{Représentation de la longueur des chemins hamiltoniens
+obtenus par différentes méthodes
+:}\label{repruxe9sentation-de-la-longueur-des-chemins-hamiltoniens-obtenus-par-diffuxe9rentes-muxe9thodes}}
+
+\includegraphics{TPstat_CR_files/figure-latex/unnamed-chunk-6-1.pdf}
+L'affichage sous forme de boxplot nous permet de remarquer que :
+
+\begin{itemize}
+\tightlist
+\item
+  la méthode branch renvoie le plus souvent un chemin plus court que les
+  autres méthodes
+\item
+  la méthode nearest renvoie le plus souvent un chemin plus long que les
+  autres méthodes
+\item
+  la boîte de la méthode repetitive\_nn est moins étendue que les boîtes
+  obtenues par les autres méthodes, ce qui nous permet de constater que
+  50\% des valeurs sont très proches de la valeur médiane
+\item
+  la boîte de la méthode nearest\_insertion est plus étendue que les
+  boîtes obtenues par les autres méthodes, ce qui nous permet de
+  constater que 50\% des valeurs sont assez étendues autour de la valeur
+  médiane
+\end{itemize}
+
+L'affichage obtenu est assez cohérent puisqu'aucune méthode n'a de
+valeur moyenne complètement absurde par rapport aux autre méthodes.
+
+\hypertarget{test-entre-nearest-et-branch}{%
+\subsubsection{test entre `nearest' et
+`branch'}\label{test-entre-nearest-et-branch}}
+
+On souhaite maintenant comparer les méthodes des plus proches voisins et
+Branch\&Bound.\\
+On réalise donc un test sur l'espérance de chaque méthode.
+
+Notre hypothèse nulle (H0) est que la moyenne des chemins hamiltoniens
+obtenus avec la méthode des plus proches voisins est inférieure ou égale
+à la moyenne des chemins hamiltoniens obtenus avec la méthode
+Branch\&Bound. Notre hypothèse alternative (H1) est que la moyenne des
+chemins hamiltoniens obtenus avec la méthode des plus proches voisins
+est supérieure à la moyenne des chemins hamiltoniens obtenus avec la
+méthode Branch\&Bound.
+
+(H0) \(m_{nn} - m_b <= 0\) \textless=\textgreater{} \(m_{nn} <= m_b\)\\
+(H1) \(m_{nn} - m_b > 0\) \textless=\textgreater{} \(m_{nn} > m_b\)
+
+Nous allons ensuite tester si au seuil de 5\% la moyenne des chemins
+hamiltoniens obtenus avec la méthode des plus proches voisins est
+inférieure ou égale à la moyenne des chemins hamiltoniens obtenus avec
+la méthode Branch\&Bound.\\
+Pour cela, nous allons faire une comparaison d'échantillons gaussiens
+appariés.En effet, les deux méthodes étant basées sur les mêmes graphes,
+les résultats obtenus ne peuvent pas être considérés comme indépéndant.
+
+On pose \(a=0.05\).
+
+On obtient une \(p_{valeur}\) de :
+
+\begin{verbatim}
+## [1] 7.011422e-12
+\end{verbatim}
+
+\begin{verbatim}
+## [1] "p_valeur < a"
+## [1] "On peut rejeter H0"
+\end{verbatim}
+
+On observe que la \(p_{valeur}\) obtenue est strictement inférieure à
+a.\\
+On peut rejeter H0, et affirmer avec un risque de 5\% que les chemins
+hamiltoniens obtenus avec la méthode des plus proches voisins sont en
+moyenne plus longs que ceux obtenus avec la méthode Branch\&Bound.
+
+\hypertarget{tests-2-uxe0-2}{%
+\subsubsection{tests 2 à 2}\label{tests-2-uxe0-2}}
+
+On souhaite maintenant comparer 2 à 2 les longueurs moyennes des chemins
+hamiltoniens obtenus par les 5 méthodes vues précédemment.
+
+On réalise donc un test sur l'espérance de chaque méthode.\\
+Soit i, j deux méthodes différentes .Notre hypothèse nulle (H0) est que
+la moyenne des chemins hamiltoniens obtenus avec la méthode i est égale
+à la moyenne des chemins hamiltoniens obtenus avec la méthode j. Notre
+hypothèse alternative (H1) est que la moyenne des chemins hamiltoniens
+obtenus avec la méthode i est différente de la moyenne des chemins
+hamiltoniens obtenus avec la méthode j.
+
+(H0) \(mi=mj\)\\
+(H1) \(mi!=mj\)
+
+Nous avons lancé 10 tests simultanés, et obtenus les résulats suivants :
+
+\begin{verbatim}
+## 
+##  Pairwise comparisons using t tests with pooled SD 
+## 
+## data:  results and methods 
+## 
+##                   branch  nearest nearest_insertion repetitive_nn
+## nearest           0.00078 -       -                 -            
+## nearest_insertion 0.02272 0.94921 -                 -            
+## repetitive_nn     0.94921 0.01702 0.20157           -            
+## two_opt           0.09341 0.53849 0.94921           0.53849      
+## 
+## P value adjustment method: holm
+\end{verbatim}
+
+Nous allons tester si au seuil de 5\%, notre hypothèse H0 est vérifiée.
+
+Si on accepte un risque alpha=5\%, on rejette notre hypothèse nulle (H0)
+si la \(p_{valeur}\) obtenue à l'indice {[}i,j{]} est inférieure à
+alpha.\\
+Donc, si la valeur à l'indice {[}i,j{]} est inférieure à alpha, nous
+pouvons affirmer que la moyenne des chemins hamiltoniens obtenus avec la
+méthode i est différente de celle obtenue avec la méthode j.
+
+En appliquant ce principe à nos résultats, nous pouvons dire que :
+
+\begin{itemize}
+\tightlist
+\item
+  les méthodes nearest et branch ont des moyennes de chemins calculés
+  différentes
+\item
+  les méthodes nearest\_insertion et branch ont des moyennes de chemins
+  calculés différentes - les méthodes nearest et repetitive\_nn ont des
+  moyennes de chemins calculés différentes
+\end{itemize}
+
+Pour les autres méthodes, nous ne pouvons pas rejeter l'hypothèse
+d'après laquelle la moyenne des chemins hamiltoniens obtenus avec la
+méthode i est égale à la moyenne des chemins hamiltoniens obtenus avec
+la méthode j.
+
+\hypertarget{temps-de-calcul}{%
+\subsection{1.2. Temps de calcul}\label{temps-de-calcul}}
+
+Nous souhaitons maintenant comparer les temps d'éxécution des
+différentes méthodes de calcul de longueur de chemin hamiltonien sur 20
+graphes de 10 sommets générés aléatoirement.
+
+Nous avons utilisé la focntion benchmark pour réaliser des statistiques
+d'exécution pour chaque méthode.
+
+Nous avons réalisé des tests sur les temps moyens d'exécution de chaque
+méthode :\\
+Soit i, j deux méthodes différentes .Notre hypothèse nulle (H0) est que
+le temps moyen d'exécution de la méthode i est égale au temps moyen
+d'exécution de la méthode j. Notre hypothèse alternative (H1) est que le
+temps moyen d'exécution de la méthode i est différent du temps moyen
+d'exécution de la méthode j.
+
+Le résultat de ces tests est représenté par une lettre dans la colonne
+cld du tableau ci-dessous. Une même lettre est attribuée aux méthodes
+pour lequelles H0 n'est pas rejetée. Deux méthodes ayant des lettres
+différentes ont des temps d'exécution moyens différents.
+
+\begin{verbatim}
+## Unit: microseconds
+##                                  expr      min        lq       mean    median
+##      TSPsolve(couts, "repetitive_nn") 4987.985 5224.5050 5960.99330 5400.4070
+##  TSPsolve(couts, "nearest_insertion")  752.606  797.9670 1054.53690  878.0855
+##            TSPsolve(couts, "two_opt")  420.184  460.4565  677.74085  513.6185
+##            TSPsolve(couts, "nearest")   11.298   17.4520   21.37865   18.6535
+##             TSPsolve(couts, "branch") 1261.913 2222.7860 3683.99245 3020.9970
+##         uq       max neval cld
+##  5794.9380  9460.839    20   c
+##  1001.3265  2684.321    20 a  
+##   583.6620  3164.062    20 a  
+##    22.7685    42.518    20 a  
+##  3891.3520 14234.911    20  b
+\end{verbatim}
+
+Nous pouvons remarquer que les méthodes nearest\_insertion, two\_opt et
+nearest ont un temps d'exécution moyen similaires. Les méthodes sont
+classées `a', ce qui montre que ce sont les méthodes les plus rapides
+des 5 méthodes proposées. De plus, les 3 méthodes ayant le même
+classement, on ne peut pas rejeter le fait que les temps moyens
+d'exécution de ces méthode sont équivalents. Il n'a, en tout cas, pas
+été mis en évidence que ces méthodes avaient des temps d'exécution
+significativement différents.\\
+Les méthodes repetitive\_nn et branch ont une durée d'exécution moyenne
+supérieure aux autres.
+
+La méthode repetitive\_nn est classée `d', ce qui fait que l'on peut
+affirmer que le temps moyen d'exécution de cette méthode est différent
+du temps moyen d'exécution des autres méthodes. De plus, comme les
+lettres \{a, b, c, \ldots\} sont attribuées en fonction du temps
+d'exécution (`a' pour la plus rapide, \ldots), on peut en déduire que le
+temps moyen d'exécution de repetitive\_nn est plus important que le
+temps moyens des autres méthodes.
+
+Par la même réflexion que celle faite précédemment, nous pouvons
+remarquer que branch est classé `b', et a un temps d'exécution moyen
+plus long que les trois méthodes classées `a'. Cependant, il a un temps
+moyen d'exécution inférieur à la méthode repetitive\_nn.~
+
+\hypertarget{etude-de-la-complexituxe9-de-lalgorithme-branch-and-bound}{%
+\section{2. Etude de la complexité de l'algorithme Branch and
+Bound}\label{etude-de-la-complexituxe9-de-lalgorithme-branch-and-bound}}
+
+Nous intéressons désormais à l'algorithme Branch\&Bound. Nous allons
+étudier sa complexité en fonction du graphe sur lequel il est appliqué.
+
+\hypertarget{comportement-par-rapport-au-nombre-de-sommets-premier-moduxe8le}{%
+\subsection{2.1. Comportement par rapport au nombre de sommets : premier
+modèle}\label{comportement-par-rapport-au-nombre-de-sommets-premier-moduxe8le}}
+
+\hypertarget{cruxe9ation-du-moduxe8le-linuxe9aire}{%
+\subsubsection{Création du modèle
+linéaire}\label{cruxe9ation-du-moduxe8le-linuxe9aire}}
+
+Dans un premier temps nous allons créer une matrice temps calculant les
+temps mis par l'algorithme Branch\&Bound pour calculer les chemins
+hamiltoniens sur un graphe de \(n\) sommets généré aléatoirement. Nous
+réalisons 10 fois l'algorithme sur un graphe à \(sommets\), et nous
+faisons varier \(n\) de 4 à 20. La matrice obtenue est donc de dimension
+17*10.
+
+A l'aide de ces données, nous pouvons afficher le graphe du temps mis
+par l'algorithme en fonction du nombre de noeuds du graphe, et le graphe
+de \(\log(temps)²\) en fonction nombre de noeuds du graphe. Cela nous
+donne les résultats ci-dessous.
+
+\includegraphics{TPstat_CR_files/figure-latex/unnamed-chunk-14-1.pdf} Le
+graphe du temps mis par l'algorithme en fonction du nombre de noeuds du
+graphe semble suivre une courbe exponentielle. Cette hypothèse est
+soutenue par le 2ème graphe.
+
+Nous avons ensuite ajusté le modèle linéaire de \(\log(temps)²\) en
+fonction de \(n\), pour en récupérer principales charactéristiques. Nous
+avons obtenu le résultat suivant :
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = vect_temps ~ vect_dim)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -62.680 -18.364   0.621  18.519  58.024 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)  71.1743     5.4199   13.13   <2e-16 ***
+## vect_dim     13.8378     0.4182   33.09   <2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 26.71 on 168 degrees of freedom
+## Multiple R-squared:  0.867,  Adjusted R-squared:  0.8662 
+## F-statistic:  1095 on 1 and 168 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+Nous pouvons remarquer qu'il y a une relation linéaire entre
+\(\log(temps)²\) et \(n\), puisque le test de Fisher ne rejette pas le
+modèle linéaire. De plus, \(R²\) =
+
+\begin{verbatim}
+## [1] 0.8669975
+\end{verbatim}
+
+\(R²\) étant proche de 1, une grande partie des données suivent le
+modéle linéaire. On peut donc en conclure qu'il y a une relation
+linéaire entre \(\log(temps)²\) et \(n\).
+
+De ce fait, on peut en déduire que :\\
+\(\exists \alpha, \beta\) tels que \(\log(temps)²=\alpha*n+\beta\)\\
+soit \(\log(temps)=^+_-\sqrt(\alpha*n+\beta)\)\\
+donc \(temps=\exp(^+_-\sqrt(\alpha*n+\beta))\)
+
+On peut donc en déduire que Branch\&Bound semble avoir une complexité
+temporelle en \(\exp(n)\).
+
+\hypertarget{analyse-de-la-validituxe9-du-moduxe8le}{%
+\subsubsection{Analyse de la validité du modèle
+:}\label{analyse-de-la-validituxe9-du-moduxe8le}}
+
+Le modèle nous renvoie une fonction de type: \(Y = aX + b + \epsilon\).
+En effet nous avons les paramètres suivants:\\
+\(a = 14.7\), \(b = 68.6\). Il reste donc a savoir les coéfficients et
+donc le modèle sont pertinents. Nous allons tous d'abord analyser la
+pertinence des coefficients puis celle du modèle en géneral.\\
+* Sois \(\alpha = 5\%\)
+
+\begin{itemize}
+\tightlist
+\item
+  L'analyse de \(a\), permet d'établir un premier résultat quantifiant
+  la significativité du modèle. En effet nous allons tester la
+  significativité de a via le test statistique: \((H0) : a = 0\) contre
+  \((H1) : a \neq 0\). La p-value de celui-ci ce retrouve dans le
+  tableau summary(temps.lm) et est \(2.2e-16\). Nous pouvons donc
+  rejeter \(H0\) et affirmer avec 5\% de risque que a n'est pas
+  significatif.
+\item
+  L'analyse de \(b\) est la moins importante. Il nous indique seulement
+  l'importance de l'intercept. Le test statistique est analogique à
+  \(a\). Ca p-value est aussi \(2.2e-16\) Nous pouvons donc rejeter
+  \(H0\) et affirmer avec 5\% de risque que a n'est pas significatif.\\
+\item
+  Nous pouvons maintenant passé a l'analyse des résidus:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Pour ceci nous allons tous d'abord nous intéréssé a plusieurs
+    graphique:
+  \end{itemize}
+\end{itemize}
+
+\includegraphics{TPstat_CR_files/figure-latex/unnamed-chunk-17-1.pdf}
+
+\emph{Residuals vs Fitted: La courbe n'est pas complètement horizontal.
+Il y'a donc un léger effet d'échelle. } Normal Q-Q: les points sont
+proches de la bissectrice, la distribution des résidus est donc
+similaire à la distribution normale. Nous voyons une légère séparation
+au niveau des queues des distribution. \emph{Scale Location: cette
+courbe représente la meme chose que la première seulement avec dles
+résisu normalisé. On remarque que la courbe est bien honrizontal que le
+léger effet d'échelle disparait. }Pour la distance de cook nous avons
+préfére prendre le graphique suivant: Nous voyons qu'aucun résidu a une
+distance plus grande que 0.05 et que la plus part on une distance
+inferieure a 0.01. Ceci indique que le bon fit du modèle.
+
+\includegraphics{TPstat_CR_files/figure-latex/unnamed-chunk-18-1.pdf}
+
+\begin{itemize}
+\tightlist
+\item
+  Il est aussi possible d'éffectuer un test statistique sur les résidus.
+  En effet s'ils suivent une loi normale ceci indique le bon fit du
+  modèle.
+\item
+  Définissons: \emph{\((H0)\) les résidus suivent une loi normale
+  }\((H1)\) les résidus ne suivent pas une loi normale
+\item
+  Pour tester ceci nous pouvons efféctuer un test de shapiro.
+\end{itemize}
+
+\begin{verbatim}
+## 
+##  Shapiro-Wilk normality test
+## 
+## data:  residuals(temps.lm)
+## W = 0.98778, p-value = 0.1472
+\end{verbatim}
+
+\begin{verbatim}
+## [1] "p-valeur >= alpha"
+## [1] "On ne peut pas rejeter H0"
+\end{verbatim}
+
+On ne peut pas rejetter H0, donc nous pouvons affirmer que les résidusne
+suivent une loi normale. Ce qui indique un modèle pertinent.
+
+\hypertarget{comportement-par-rapport-au-nombre-de-sommets-uxe9tude-du-comportement-moyen}{%
+\subsection{2.2. Comportement par rapport au nombre de sommets : étude
+du comportement
+moyen}\label{comportement-par-rapport-au-nombre-de-sommets-uxe9tude-du-comportement-moyen}}
+
+L'explication des résultats étants similaire a 2.1, nous allons
+simplement afficher nos résultats.\\
+Récupération du temps moyen.
+
+Ajustement du modèle linéaire de \(\log(temps.moy)^2\) en fonction de
+\(n\).
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = vect_temps_moy ~ vect_dim_moy)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -40.129 -11.521  -3.183  15.286  28.129 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)    71.778     13.022   5.512 5.97e-05 ***
+## vect_dim_moy   14.222      1.005  14.155 4.39e-10 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 20.29 on 15 degrees of freedom
+## Multiple R-squared:  0.9304, Adjusted R-squared:  0.9257 
+## F-statistic: 200.4 on 1 and 15 DF,  p-value: 4.388e-10
+\end{verbatim}
+
+Analyse de la validité du modèle :
+
+\begin{itemize}
+\tightlist
+\item
+  \(a\) pertinent \(p_{value} = 2.3*10^{-9}\)
+\item
+  \(b\) pertinent \(p_{value} = 0.000476\)
+\end{itemize}
+
+\includegraphics{TPstat_CR_files/figure-latex/unnamed-chunk-23-1.pdf}
+
+\emph{Residuals vs Fitted: La courbe n'est pas du tou horizontal. Il y'a
+donc un important effet d'échelle. } Normal Q-Q: Les distributions sont
+identiques. *Scale Location: L'effet d'échelle disparait. Le nuage de
+point est sans structure. Ce qui indique la qualité du modèle.
+
+\begin{itemize}
+\tightlist
+\item
+  Il est aussi possible d'éffectuer un test statistique sur les résidus.
+  En effet s'ils suivent une loi normale ceci indique le bon fit du
+  modèle.
+\item
+  Définissons: \emph{\((H0)\) les résidus suivent une loi normale
+  }\((H1)\) les résidus ne suivent pas une loi normale
+\item
+  Pour tester ceci nous pouvons efféctuer un test de shapiro.
+\end{itemize}
+
+(H0) les résidus suivent une loi normale (H1) les résidus ne suivent pas
+une loi normale
+
+On prend un risque alpha=5\%
+
+\begin{verbatim}
+## 
+##  Shapiro-Wilk normality test
+## 
+## data:  residuals(temps.lm_moy)
+## W = 0.94294, p-value = 0.3548
+\end{verbatim}
+
+\begin{verbatim}
+## [1] "p-valeur >= alpha"
+## [1] "On ne peut pas rejeter H0"
+\end{verbatim}
+
+On ne peut rejetter H0, donc nous pouvons affirmer que les résidus
+suivent une loi normale. Ce qui indique un modèle pertinent.
+
+\hypertarget{comportement-par-rapport-uxe0-la-structure-du-graphe}{%
+\subsection{2.3. Comportement par rapport à la structure du
+graphe}\label{comportement-par-rapport-uxe0-la-structure-du-graphe}}
+
+Lecture du fichier `DonneesTSP.csv'.
+
+\begin{itemize}
+\tightlist
+\item
+  D'après nous les variables non pertinentes sont: diameter, mean.dist,
+  sd.dist, mean.long. En effet tous ces variables s'intérèssent
+  seulement aux couts des arretes. Ces derniers n'ont pas d'importance
+  dans le temps de calcul (calculer le chemin avec une arrete de 5 ou
+  dfe 1000 reviens a la meme chose).
+\end{itemize}
+
+*Ajustement du modèle linéaire de \(\log(temps.moy)\) en fonction de
+toutes les variables présentes. Modèle sans constante. Nous allons
+d'abord procédé a un test de fisher avec toutes les variables.
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = log(tps) ~ ., data = data.graph)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.78776 -0.15715  0.01542  0.17260  0.65036 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)  6.4903426  0.5450715  11.907  < 2e-16 ***
+## dim          3.4191719  0.2391476  14.297  < 2e-16 ***
+## mean.long   -4.8152962  0.7294055  -6.602 1.05e-08 ***
+## mean.dist   -0.0020048  0.0010633  -1.886  0.06404 .  
+## sd.dist      0.0048105  0.0006652   7.231 8.55e-10 ***
+## mean.deg    -0.1367369  0.0425459  -3.214  0.00208 ** 
+## sd.deg       0.1399515  0.0872430   1.604  0.11376    
+## diameter    -0.0646816  0.1566329  -0.413  0.68107    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.2912 on 62 degrees of freedom
+## Multiple R-squared:  0.986,  Adjusted R-squared:  0.9844 
+## F-statistic: 622.6 on 7 and 62 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  Sois \(\alpha = 1\%\)
+\item
+  Le test de fisher à une \(p_{value}\) de \(2x10{^-16}\) et nous permet
+  donc de rejeter \(H0\) avec un risque de \(1\%\).
+\item
+  Dans l'étape suivante nous allons procéder au calcul de l'AIC pour les
+  variables de notre modèle. Ceci nous permettera de supprimer les
+  variables non pertinentes.
+\end{itemize}
+
+\begin{verbatim}
+## Start:  AIC=-165.23
+## log(tps) ~ dim + mean.long + mean.dist + sd.dist + mean.deg + 
+##     sd.deg + diameter
+## 
+##             Df Sum of Sq     RSS      AIC
+## - diameter   1    0.0145  5.2711 -167.038
+## <none>                    5.2566 -165.230
+## - sd.deg     1    0.2182  5.4748 -164.384
+## - mean.dist  1    0.3014  5.5581 -163.327
+## - mean.deg   1    0.8757  6.1324 -156.444
+## - mean.long  1    3.6951  8.9517 -129.965
+## - sd.dist    1    4.4335  9.6902 -124.417
+## - dim        1   17.3311 22.5877  -65.176
+## 
+## Step:  AIC=-167.04
+## log(tps) ~ dim + mean.long + mean.dist + sd.dist + mean.deg + 
+##     sd.deg
+## 
+##             Df Sum of Sq     RSS      AIC
+## <none>                    5.2711 -167.038
+## - sd.deg     1    0.2065  5.4776 -166.349
+## - mean.dist  1    0.6554  5.9265 -160.835
+## - mean.deg   1    0.9820  6.2531 -157.080
+## - mean.long  1    3.8220  9.0931 -130.869
+## - sd.dist    1    4.9133 10.1844 -122.935
+## - dim        1   18.7788 24.0499  -62.785
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = log(tps) ~ dim + mean.long + mean.dist + sd.dist + 
+##     mean.deg + sd.deg, data = data.graph)
+## 
+## Coefficients:
+## (Intercept)          dim    mean.long    mean.dist      sd.dist     mean.deg  
+##    6.396008     3.444077    -4.854857    -0.002284     0.004883    -0.140823  
+##      sd.deg  
+##    0.126916
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  La variable diameter à été supprimé du modèle. Il reste sd.dist,
+  mean.dist et mean.long, qui nous apparaissent peut pertinente.
+\end{itemize}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = log(tps) ~ dim + mean.long + mean.dist + sd.dist + 
+##     mean.deg + sd.deg, data = data.graph)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.78246 -0.15445  0.00111  0.18027  0.63156 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)  6.3960078  0.4916227  13.010  < 2e-16 ***
+## dim          3.4440771  0.2298893  14.981  < 2e-16 ***
+## mean.long   -4.8548566  0.7183110  -6.759 5.25e-09 ***
+## mean.dist   -0.0022837  0.0008160  -2.799  0.00680 ** 
+## sd.dist      0.0048833  0.0006372   7.663 1.39e-10 ***
+## mean.deg    -0.1408227  0.0411061  -3.426  0.00108 ** 
+## sd.deg       0.1269156  0.0807943   1.571  0.12123    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.2893 on 63 degrees of freedom
+## Multiple R-squared:  0.9859, Adjusted R-squared:  0.9846 
+## F-statistic:   736 on 6 and 63 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+\begin{itemize}
+\item
+  Sois \(\alpha = 1\%\).
+\item
+  D'après le test de fishernous pouvons affirmer que le test est
+  pertinent avec un risque de \(1\%\) (\(p_{value} =2.2*10^{-16}\)).
+  Cependant la \(p_{value}\) n'a pas changé en supprimant la variable
+  diameter.
+\item
+  Nous pouvons aussi analyser les résidus, pour voir si ils suivent une
+  distribution normal, avec le test de Shapiro.
+\end{itemize}
+
+\begin{verbatim}
+## 
+##  Shapiro-Wilk normality test
+## 
+## data:  residuals(new_model)
+## W = 0.98094, p-value = 0.3641
+\end{verbatim}
+
+\begin{verbatim}
+## [1] "p-valeur > alpha"
+## [1] "On ne peut pas rejeter H0"
+\end{verbatim}
+
+On ne peut pas rejetter H0, donc nous pouvons affirmer que les résidus
+suivent une loi normale. Ce qui indique un modèle pertinent.
+
+Mise en \oe uvre d'une sélection de variables pour ne garder que les
+variables pertinentes.
+
+Analyse de la validité du modèle :
+
+\begin{itemize}
+\item
+  pertinence des coefficients et du modèle,
+\item
+  étude des hypothèses sur les résidus.
+\end{itemize}
+
+\end{document}

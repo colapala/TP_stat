@@ -4,8 +4,7 @@ author: "Cédric Milinaire, Corentin Laharotte"
 date: "4 avril 2020"
 output:
   pdf_document: default
-  html_document:
-    df_print: paged
+  toc: true
 ---
 
 ```{r setup, include=FALSE}
@@ -29,7 +28,7 @@ library(TSPpackage)
 set.seed(150)
 ```
 Voici le plan de ce qui sera fait dans le TP.
-
+\toc
 # 0. Visualisation de chemins
 
 Lecture du fichier des villes :
@@ -300,9 +299,10 @@ On peut en déduire que Branch&Bound semble avoir une complexité temporelle en 
 
 Le modèle nous renvoie une fonction de type: $Y = aX + b + \epsilon$. En effet nous avons les paramètres suivants:   
 $a = 14.7$, $b = 68.6$. Il reste donc a savoir les coéfficients et donc le modèle sont pertinents. Nous allons tous d'abord analyser la pertinence des coefficients puis celle du modèle en géneral.   
+ * Sois $\alpha = 5\%$
 
-  * L'analyse de $a$, permet d'établir un premier résultat quantifiant la significativité du modèle. En effet nous allons tester la significativité de a via le test statistique: $(H0) : a = 0$ contre $(H1) : a \neq 0$. La p-value de celui-ci ce retrouve dans le tableau summary(temps.lm) et est $2.2e-16$. Nous sommes donc capable d'affiirmer avec un risque de  de moins que 0.1% (chiffre arbitraire plus grand que $2.2e-14$ )  que $a$ est significatif.  
-  * L'analyse de $b$ est la moins importante. Il nous indique seulement l'importance de l'intercept. Le test statistique est analogique à $a$. Ca p-value est aussi $2.2e-16$ Nous sommes donc capable d'affiirmer avec un risque de  de moins que 0.1% (chiffre arbitraire plus grand que $2.2e-14$ )  que l'intercept est utile.  
+  * L'analyse de $a$, permet d'établir un premier résultat quantifiant la significativité du modèle. En effet nous allons tester la significativité de a via le test statistique: $(H0) : a = 0$ contre $(H1) : a \neq 0$. La p-value de celui-ci ce retrouve dans le tableau summary(temps.lm) et est $2.2e-16$. Nous pouvons donc rejeter $H0$  et affirmer avec 5% de risque que a n'est pas significatif. 
+  * L'analyse de $b$ est la moins importante. Il nous indique seulement l'importance de l'intercept. Le test statistique est analogique à $a$. Ca p-value est aussi $2.2e-16$ Nous pouvons donc rejeter $H0$  et affirmer avec 5% de risque que a n'est pas significatif.  
   * Nous pouvons maintenant passé a l'analyse des résidus: 
     * Pour ceci nous allons tous d'abord nous intéréssé a plusieurs graphique:
 
@@ -345,7 +345,7 @@ if(shapiroTest$p.value < alpha){
   print("On ne peut pas rejeter H0")
 }
 ```
-On ne peut rejetter H0, donc nous pouvons affirmer que les résidusne suivent une loi normale. Ce qui indique un modèle pertinent. 
+On ne peut pas rejetter H0, donc nous pouvons affirmer que les résidusne suivent une loi normale. Ce qui indique un modèle pertinent. 
 
 
 ## 2.2. Comportement par rapport au nombre de sommets : étude du comportement moyen
@@ -421,19 +421,20 @@ data.graph$dim<-sqrt(data.graph$dim)
 ```
  * D'après nous les variables non pertinentes sont: diameter, mean.dist, sd.dist, mean.long. En effet tous ces variables s'intérèssent seulement aux couts des arretes. Ces derniers n'ont pas d'importance dans le temps de calcul (calculer le chemin avec une arrete de 5 ou dfe 1000 reviens a la meme chose). 
 
-Ajustement du modèle linéaire de $\log(temps.moy)^2$ en fonction de toutes les variables présentes. Modèle sans constante.
+ *Ajustement du modèle linéaire de $\log(temps.moy)$ en fonction de toutes les variables présentes. Modèle sans constante. Nous allons d'abord procédé a un test de fisher avec toutes les variables. 
 
 ```{r, echo=FALSE}
 model.complete <- lm(log(tps)~., data = data.graph)
 summary(model.complete)
 ```
-
-
+* Sois $\alpha = 1\%$
+* Le test de fisher à une $p_{value}$ de $2x10{^-16}$ et nous permet donc de rejeter $H0$ avec un risque de $1\%$.
+* Dans l'étape suivante nous allons procéder au calcul de l'AIC pour les variables de notre modèle. Ceci nous permettera de supprimer les variables non pertinentes.
 ```{r, echo=FALSE}
 (step(model.complete))
 ```
 
-* La variable diameter à été supprimé du modèle. Il reste sd.di, mean.dist et mean.long. Qui nous apparaissent peut pertinente. 
+* La variable diameter à été supprimé du modèle. Il reste sd.dist, mean.dist et mean.long, qui nous apparaissent peut pertinente. 
 
 ```{r, echo=FALSE}
 new_model <- lm(formula = log(tps) ~ dim + mean.long + mean.dist + sd.dist + 
@@ -441,10 +442,10 @@ new_model <- lm(formula = log(tps) ~ dim + mean.long + mean.dist + sd.dist +
 summary(new_model)
 ```
 
+* Sois $\alpha = 1\%$.
+ * D'après le test de fishernous pouvons affirmer que le test est pertinent avec un risque de $1\%$ ($p_{value}  =2.2*10^{-16}$). Cependant la $p_{value}$ n'a pas changé en supprimant la variable diameter. 
 
- * D'après le test de fisher le modèle est pertinent ($p_{value}  =2.2*10^{-16}$)
-
-
+* Nous pouvons aussi analyser les résidus, pour voir si ils suivent une distribution normal, avec le test de Shapiro.
 
 
 ```{r, echo=FALSE}
@@ -457,10 +458,10 @@ print(shapiroTest_aic)
 #risque 5%
 alpha=0.05
 if(shapiroTest_moy$p.value < alpha){
-  print("p-valeur < alpha")
+  print("p-valeur <= alpha")
   print("On peut rejeter H0")
 }else{
-  print("p-valeur >= alpha")
+  print("p-valeur > alpha")
   print("On ne peut pas rejeter H0")
 }
 ```
