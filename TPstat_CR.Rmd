@@ -3,9 +3,9 @@ title: "TP Statistique"
 author: "Cédric Milinaire, Corentin Laharotte"
 date: "4 avril 2020"
 output:
-  pdf_document: default
   html_document:
     df_print: paged
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -112,14 +112,15 @@ boxplot(cheminRepetitive,cheminNearestIns,chemin2Opt,cheminNearest,cheminBranch,
         )
 ```
 L'affichage sous forme de boxplot nous permet de remarquer que :
-   * la méthode branch renvoie le plus souvent un chemin plus court que les autres méthodes
-   * la méthode nearest renvoie le plus souvent un chemin plus long que les autres méthodes
-   * la boîte de la méthode repetitive_nn est moins étendue que les boîtes obtenues par les autres méthodes, ce qui nous permet de constater que 50% des valeurs sont très proches de la valeur médiane
-   * la boîte de la méthode nearest_insertion est plus étendue que les boîtes obtenues par les autres méthodes, ce qui nous permet de constater que 50% des valeurs sont assez étendues autour de la valeur médiane \\
+
+- la méthode branch renvoie le plus souvent un chemin plus court que les autres méthodes
+- la méthode nearest renvoie le plus souvent un chemin plus long que les autres méthodes
+- la boîte de la méthode repetitive_nn est moins étendue que les boîtes obtenues par les autres méthodes, ce qui nous permet de constater que 50% des valeurs sont très proches de la valeur médiane
+- la boîte de la méthode nearest_insertion est plus étendue que les boîtes obtenues par les autres méthodes, ce qui nous permet de constater que 50% des valeurs sont assez étendues autour de la valeur médiane \\
   
 L'affichage obtenu est assez cohérent puisqu'aucune méthode n'a de valeur moyenne complètement absurde par rapport aux autre méthodes.
 
-   * test entre 'nearest' et 'branch'
+### test entre 'nearest' et 'branch'
  
 On souhaite maintenant comparer les méthodes des plus proches voisins et Branch&Bound.\\
 On réalise donc un test sur l'espérance de chaque méthode.\\
@@ -156,7 +157,7 @@ if(a>t_a$p.value){
 On observe que la $p_{valeur}$ obtenue est strictement inférieure à a. \\
 On peut rejeter H0, et affirmer avec un risque de 5% que les chemins hamiltoniens obtenus avec la méthode des plus proches voisins sont en moyenne plus longs que ceux obtenus avec la méthode Branch&Bound.
 
-   * tests 2 à 2 
+### tests 2 à 2 
 On souhaite maintenant comparer 2 à 2 les longueurs moyennes des chemins hamiltoniens obtenus par les 5 méthodes vues précédemment.\\
 On réalise donc un test sur l'espérance de chaque méthode. \\
 Soit i, j deux méthodes différentes .Notre hypothèse nulle (H0) est que la moyenne des chemins hamiltoniens obtenus avec la méthode i est égale à la moyenne des chemins hamiltoniens obtenus avec la méthode j. Notre hypothèse alternative (H1) est que la moyenne des chemins hamiltoniens obtenus avec la méthode i est différente de la moyenne des chemins hamiltoniens obtenus avec la méthode j.\\
@@ -191,8 +192,9 @@ Si on accepte un risque alpha=5%, on rejette notre hypothèse nulle (H0) si la $
 Donc, si la valeur à l'indice [i,j] est inférieure à alpha, nous pouvons affirmer que la moyenne des chemins hamiltoniens obtenus avec la méthode i est différente de celle obtenue avec la méthode j.\\
 
 En appliquant ce principe à nos résultats, nous pouvons dire que :
-  - les méthodes nearest et branch ont des moyennes de chemins calculés différentes
-  - les méthodes nearest_insertion et branch ont des moyennes de chemins calculés différentes   - les méthodes nearest et repetitive_nn ont des moyennes de chemins calculés différentes
+
+- les méthodes nearest et branch ont des moyennes de chemins calculés différentes
+- les méthodes nearest_insertion et branch ont des moyennes de chemins calculés différentes   - les méthodes nearest et repetitive_nn ont des moyennes de chemins calculés différentes
   
 Pour les autres méthodes, nous ne pouvons pas rejeter l'hypothèse d'après laquelle la moyenne des chemins hamiltoniens obtenus avec la méthode i est égale à la moyenne des chemins hamiltoniens obtenus avec la méthode j.
 
@@ -206,30 +208,20 @@ Soit i, j deux méthodes différentes .Notre hypothèse nulle (H0) est que le te
 Le résultat de ces tests est représenté par une lettre dans la colonne X du tableau ci-dessous. Une même lettre est attribuée aux méthodes pour lequelles H0 n'est pas rejetée. Deux méthodes ayant des lettres différentes ont des temps d'exécution moyens différents.\\
 
 ```{r, echo=FALSE}
-essai<-data.frame(microbenchmark(TSPsolve(couts,"repetitive_nn"), TSPsolve(couts,"nearest_insertion"), TSPsolve(couts,"two_opt"), TSPsolve(couts,"nearest"), TSPsolve(couts,"branch"), 
+microbenchmark(TSPsolve(couts,"repetitive_nn"), TSPsolve(couts,"nearest_insertion"), TSPsolve(couts,"two_opt"), TSPsolve(couts,"nearest"), TSPsolve(couts,"branch"), 
                times=20, 
                setup={
                  n <- 10
                  sommets <- data.frame(x = runif(n), y = runif(n))
                  couts <- distance(sommets)
                 }
-            ))
-
+            )
 ```
 Nous pouvons remarquer que les méthodes nearest_insertion, two_opt et nearest ont un temps d'exécution moyen similaires. Les méthodes sont classées 'a', ce qui montre que ce sont les méthodes les plus rapides des 5 méthodes proposées. De plus, les 3 méthodes ayant le même classement, on ne peut pas rejeter le fait que les temps moyens d'exécution de ces méthode sont équivalents. Il n'a, en tout cas, pas été mis en évidence que ces méthodes avaient des temps d'exécution significativement différents. \\
 Les méthodes repetitive_nn et branch ont une durée d'exécution moyenne supérieure aux autres. \\
-La méthode repetitive_nn est classée 'd', ce qui fait que l'on peut affirmer que le temps moyen d'exécution de cette méthode est différent du temps moyen d'exécution des autres méthodes. De plus, comme les lettres {a, b, c, ...} sont attribuées en fonction du temps d'exécution ('a' pour la plus rapide, ...), on peut en déduire que le temps moyen d'exécution de repetitive_nn est plus important que le temps moyens des autres méthodes. \\
+La méthode repetitive_nn est classée 'd', ce qui fait que l'on peut affirmer que le temps moyen d'exécution de cette méthode est différent du temps moyen d'exécution des autres méthodes. De plus, comme les lettres {a, b, c, ...} sont attribuées en fonction du temps d'exécution ('a' pour la plus rapide, ...), on peut en déduire que le temps moyen d'exécution de repetitive_nn est plus important que le temps moyens des autres méthodes.
+\\
 Par la même réflexion que celle faite précédemment, nous pouvons remarquer que branch est classé 'b', et a un temps d'exécution moyen plus long que les trois méthodes classées 'a'. Cependant, il a un temps moyen d'exécution inférieur à la méthode repetitive_nn. 
-
-### commentaire prof
-Tout les membres d’un meme groupe n’ont pas de différence significative pour leurs moyenne et les groupes
-{a, b, c, d, . . . } sont rangés de manière croisante.
-Exemple - si variables X et variable Y sont dans le groupe a alors m X ' m Y où plutot qu’il n’a pas pu être
-mis en évidence une différence significative entre les deux. - si variables X et variable Y sont dans le groupe
-a et b alors m X 6 = m Y significativement. Et comme {a, b, c, d, . . . } sont rangés de manière croisante alors
-m a < m b donc m X < m Y
-
-
 
 # 2. Etude de la complexité de l'algorithme Branch and Bound
 
