@@ -78,7 +78,7 @@ sommets <- data.frame(x = runif(n), y = runif(n))
 
 Dans un premier temps, nous allons comparer les longueurs des chemins hamiltoniens calculés par les 5 méthodes sur 50 réalisations de graphes aléatoires.
 
-   * Représentation de la longueur des chemins hamiltoniens obtenus par différentes méthodes :
+### Représentation de la longueur des chemins hamiltoniens obtenus par différentes méthodes :
    
 ```{r, echo=FALSE}
 cheminRepetitive <- vector()
@@ -115,20 +115,20 @@ L'affichage sous forme de boxplot nous permet de remarquer que :
    * la méthode branch renvoie le plus souvent un chemin plus court que les autres méthodes
    * la méthode nearest renvoie le plus souvent un chemin plus long que les autres méthodes
    * la boîte de la méthode repetitive_nn est moins étendue que les boîtes obtenues par les autres méthodes, ce qui nous permet de constater que 50% des valeurs sont très proches de la valeur médiane
-   * la boîte de la méthode nearest_insertion est plus étendue que les boîtes obtenues par les autres méthodes, ce qui nous permet de constater que 50% des valeurs sont assez étendues autour de la valeur médiane <br/>
+   * la boîte de la méthode nearest_insertion est plus étendue que les boîtes obtenues par les autres méthodes, ce qui nous permet de constater que 50% des valeurs sont assez étendues autour de la valeur médiane \\
   
 L'affichage obtenu est assez cohérent puisqu'aucune méthode n'a de valeur moyenne complètement absurde par rapport aux autre méthodes.
 
    * test entre 'nearest' et 'branch'
  
-On souhaite maintenant comparer les méthodes des plus proches voisins et Branch&Bound.<br/>
-On réalise donc un test sur l'espérance de chaque méthode.<br/>
-Notre hypothèse nulle (H0) est que la moyenne des chemins hamiltoniens obtenus avec la méthode des plus proches voisins est inférieure ou égale à la moyenne des chemins hamiltoniens obtenus avec la méthode Branch&Bound. Notre hypothèse alternative (H1) est que la moyenne des chemins hamiltoniens obtenus avec la méthode des plus proches voisins est supérieure à la moyenne des chemins hamiltoniens obtenus avec la méthode Branch&Bound.<br/>
-  (H0) $m_{nn} - m_b <= 0$    <=>  $m_{nn} <= m_b$ <br/>
-  (H1) $m_{nn} - m_b > 0$     <=> $m_{nn} > m_b$ <br/>
+On souhaite maintenant comparer les méthodes des plus proches voisins et Branch&Bound.\\
+On réalise donc un test sur l'espérance de chaque méthode.\\
+Notre hypothèse nulle (H0) est que la moyenne des chemins hamiltoniens obtenus avec la méthode des plus proches voisins est inférieure ou égale à la moyenne des chemins hamiltoniens obtenus avec la méthode Branch&Bound. Notre hypothèse alternative (H1) est que la moyenne des chemins hamiltoniens obtenus avec la méthode des plus proches voisins est supérieure à la moyenne des chemins hamiltoniens obtenus avec la méthode Branch&Bound.\\
+  (H0) $m_{nn} - m_b <= 0$    <=>  $m_{nn} <= m_b$ \\
+  (H1) $m_{nn} - m_b > 0$     <=> $m_{nn} > m_b$ \\
  
-Nous allons ensuite tester si au seuil de 5% la moyenne des chemins hamiltoniens obtenus avec la méthode des plus proches voisins est inférieure ou égale à la moyenne des chemins hamiltoniens obtenus avec la méthode Branch&Bound. <br/>
-Pour cela, nous allons faire une comparaison d'échantillons gaussiens appariés.En effet, les deux méthodes étant basées sur les mêmes graphes, les résultats obtenus ne peuvent pas être considérés comme indépéndant.<br/>
+Nous allons ensuite tester si au seuil de 5% la moyenne des chemins hamiltoniens obtenus avec la méthode des plus proches voisins est inférieure ou égale à la moyenne des chemins hamiltoniens obtenus avec la méthode Branch&Bound. \\
+Pour cela, nous allons faire une comparaison d'échantillons gaussiens appariés.En effet, les deux méthodes étant basées sur les mêmes graphes, les résultats obtenus ne peuvent pas être considérés comme indépéndant.\\
 
 On pose $a=0.05$.
 
@@ -153,17 +153,17 @@ if(a>t_a$p.value){
    print("On ne peut pas rejeter H0")
 }
 ```
-On observe que la $p_{valeur}$ obtenue est strictement inférieure à a. <br/>
+On observe que la $p_{valeur}$ obtenue est strictement inférieure à a. \\
 On peut rejeter H0, et affirmer avec un risque de 5% que les chemins hamiltoniens obtenus avec la méthode des plus proches voisins sont en moyenne plus longs que ceux obtenus avec la méthode Branch&Bound.
 
    * tests 2 à 2 
-On souhaite maintenant comparer 2 à 2 les longueurs moyennes des chemins hamiltoniens obtenus par les 5 méthodes vues précédemment.<br/>
-On réalise donc un test sur l'espérance de chaque méthode. <br/>
-Soit i, j deux méthodes différentes .Notre hypothèse nulle (H0) est que la moyenne des chemins hamiltoniens obtenus avec la méthode i est égale à la moyenne des chemins hamiltoniens obtenus avec la méthode j. Notre hypothèse alternative (H1) est que la moyenne des chemins hamiltoniens obtenus avec la méthode i est différente de la moyenne des chemins hamiltoniens obtenus avec la méthode j.<br/>
-(H0) $mi=mj$ <br/>
-(H1) $mi!=mj$ <br/>
+On souhaite maintenant comparer 2 à 2 les longueurs moyennes des chemins hamiltoniens obtenus par les 5 méthodes vues précédemment.\\
+On réalise donc un test sur l'espérance de chaque méthode. \\
+Soit i, j deux méthodes différentes .Notre hypothèse nulle (H0) est que la moyenne des chemins hamiltoniens obtenus avec la méthode i est égale à la moyenne des chemins hamiltoniens obtenus avec la méthode j. Notre hypothèse alternative (H1) est que la moyenne des chemins hamiltoniens obtenus avec la méthode i est différente de la moyenne des chemins hamiltoniens obtenus avec la méthode j.\\
+(H0) $mi=mj$ \\
+(H1) $mi!=mj$ \\
 
-Nous avons lancé 10 tests simultanés, et obtenus les résulats suivants : <br/>
+Nous avons lancé 10 tests simultanés, et obtenus les résulats suivants : \\
   
 ```{r, echo=FALSE}
 methodsRepetitive <- vector()
@@ -185,10 +185,10 @@ results<-c(cheminRepetitive, cheminNearestIns, chemin2Opt, cheminNearest, chemin
 #test
 pairwise.t.test(results,methods,adjust.method="bonferroni")
 ```
-Nous allons tester si au seuil de 5%, notre hypothèse H0 est vérifiée.<br/> <br/>
+Nous allons tester si au seuil de 5%, notre hypothèse H0 est vérifiée.\\ \\
 
-Si on accepte un risque alpha=5%, on rejette notre hypothèse nulle (H0) si la $p_{valeur}$ obtenue à l'indice [i,j] est inférieure à alpha.<br/> 
-Donc, si la valeur à l'indice [i,j] est inférieure à alpha, nous pouvons affirmer que la moyenne des chemins hamiltoniens obtenus avec la méthode i est différente de celle obtenue avec la méthode j.<br/>
+Si on accepte un risque alpha=5%, on rejette notre hypothèse nulle (H0) si la $p_{valeur}$ obtenue à l'indice [i,j] est inférieure à alpha.\\ 
+Donc, si la valeur à l'indice [i,j] est inférieure à alpha, nous pouvons affirmer que la moyenne des chemins hamiltoniens obtenus avec la méthode i est différente de celle obtenue avec la méthode j.\\
 
 En appliquant ce principe à nos résultats, nous pouvons dire que :
   - les méthodes nearest et branch ont des moyennes de chemins calculés différentes
@@ -198,19 +198,23 @@ Pour les autres méthodes, nous ne pouvons pas rejeter l'hypothèse d'après laq
 
 ## 1.2. Temps de calcul
 
-Comparaison des temps à l'aide du package microbenchmark.
+Nous souhaitons maintenant comparer les temps d'éxécution des différentes méthodes de calcul de longueur de chemin hamiltonien sur 20 graphes de 10 sommets générés aléatoirement.\\
 
-Application de microbenchmark :
+Nous avons utilisé la focntion benchmark pour réaliser des statistiques d'exécution pour chaque méthode. 
+Nous avons réalisé des tests sur les temps moyens d'exécution de chaque méthode : \\
+Soit i, j deux méthodes différentes .Notre hypothèse nulle (H0) est que le temps moyen d'exécution de la méthode i est égale au temps moyen d'exécution de la méthode j. Notre hypothèse alternative (H1) est que le temps moyen d'exécution de la méthode i est différent du temps moyen d'exécution de la méthode j.\\
+Le résultat de ces tests est représenté par une lettre dans la colonne X du tableau ci-dessous. Une même lettre est attribuée aux méthodes pour lequelles H0 n'est pas rejetée. Deux méthodes ayant des lettres différentes ont des temps d'exécution moyens différents.\\
 
 ```{r, echo=FALSE}
-microbenchmark(TSPsolve(couts,"repetitive_nn"), TSPsolve(couts,"nearest_insertion"), TSPsolve(couts,"two_opt"), TSPsolve(couts,"nearest"), TSPsolve(couts,"branch"), 
+essai<-data.frame(microbenchmark(TSPsolve(couts,"repetitive_nn"), TSPsolve(couts,"nearest_insertion"), TSPsolve(couts,"two_opt"), TSPsolve(couts,"nearest"), TSPsolve(couts,"branch"), 
                times=20, 
                setup={
                  n <- 10
                  sommets <- data.frame(x = runif(n), y = runif(n))
                  couts <- distance(sommets)
                 }
-            )
+            ))
+
 ```
 -en moyenne ils sont tous a peu pres equivalent en parecequ'on ne peut pas rejeter h0 pour tous sauf repitive nn 
 -confirmer en regardant les chiffres repetitve nn prend en moyenne au moins 2x plus de temps que les autres
