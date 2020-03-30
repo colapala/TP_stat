@@ -157,7 +157,7 @@ if(a>t_a$p.value){
 }
 ```
 On observe que la $p_{valeur}$ obtenue est strictement inférieure à a.   
-On peut rejeter H0, et affirmer avec un risque de 5% que les chemins hamiltoniens obtenus avec la méthode des plus proches voisins sont en moyenne plus longs que ceux obtenus avec la méthode Branch&Bound.
+On peut rejeter H0, et affirmer avec un risque de 5% que la moyenne des chemins hamiltoniens obtenus avec la méthode des plus proches voisins n'est pas inférieure à la moyenne des chemins hamiltoniens obtenus avec la méthode de Branch&Bound.
 
 ### tests 2 à 2 
 On souhaite maintenant comparer 2 à 2 les longueurs moyennes des chemins hamiltoniens obtenus par les 5 méthodes vues précédemment.  
@@ -193,7 +193,7 @@ pairwise.t.test(results,methods,adjust.method="bonferroni")
 Nous allons tester si au seuil de 5%, notre hypothèse H0 est vérifiée.     
 
 Si on accepte un risque alpha=5%, on rejette notre hypothèse nulle (H0) si la $p_{valeur}$ obtenue à l'indice [i,j] est inférieure à alpha.   
-Donc, si la valeur à l'indice [i,j] est inférieure à alpha, nous pouvons affirmer que la moyenne des chemins hamiltoniens obtenus avec la méthode i est différente de celle obtenue avec la méthode j.  
+Donc, si la valeur à l'indice [i,j] est inférieure à alpha, nous pouvons affirmer avec un risque de 5% que la moyenne des chemins hamiltoniens obtenus avec la méthode i est différente de celle obtenue avec la méthode j.  
 
 En appliquant ce principe à nos résultats, nous pouvons dire que :
 
@@ -210,8 +210,12 @@ Nous avons utilisé la focntion benchmark pour réaliser des statistiques d'exé
   
 Nous avons réalisé des tests sur les temps moyens d'exécution de chaque méthode :   
 Soit i, j deux méthodes différentes .Notre hypothèse nulle (H0) est que le temps moyen d'exécution de la méthode i est égale au temps moyen d'exécution de la méthode j. Notre hypothèse alternative (H1) est que le temps moyen d'exécution de la méthode i est différent du temps moyen d'exécution de la méthode j.  
+
+(H0) $mi=mj$   
+(H1) $mi!=mj$
   
-Le résultat de ces tests est représenté par une lettre dans la colonne cld du tableau ci-dessous. Une même lettre est attribuée aux méthodes pour lequelles H0 n'est pas rejetée. Deux méthodes ayant des lettres différentes ont des temps d'exécution moyens différents.  
+Le résultat de ces tests est représenté par une lettre dans la colonne cld du tableau ci-dessous. Une même lettre est attribuée aux méthodes pour lequelles H0 n'est pas rejetée. Les lettres sont classées par ordre croissant de temps d'exécution, ainsi un algorithme classé 'a' est plus rapide qu'un algoriyhme classé 'b'.  
+Deux méthodes ayant des lettres différentes ont donc des temps d'exécution moyens différents.  
 
 ```{r, echo=FALSE}
 microbenchmark(TSPsolve(couts,"repetitive_nn"), TSPsolve(couts,"nearest_insertion"), TSPsolve(couts,"two_opt"), TSPsolve(couts,"nearest"), TSPsolve(couts,"branch"), 
@@ -226,7 +230,7 @@ microbenchmark(TSPsolve(couts,"repetitive_nn"), TSPsolve(couts,"nearest_insertio
 Nous pouvons remarquer que les méthodes nearest_insertion, two_opt et nearest ont un temps d'exécution moyen similaires. Les méthodes sont classées 'a', ce qui montre que ce sont les méthodes les plus rapides des 5 méthodes proposées. De plus, les 3 méthodes ayant le même classement, on ne peut pas rejeter le fait que les temps moyens d'exécution de ces méthode sont équivalents. Il n'a, en tout cas, pas été mis en évidence que ces méthodes avaient des temps d'exécution significativement différents.     
 Les méthodes repetitive_nn et branch ont une durée d'exécution moyenne supérieure aux autres.
   
-La méthode repetitive_nn est classée 'd', ce qui fait que l'on peut affirmer que le temps moyen d'exécution de cette méthode est différent du temps moyen d'exécution des autres méthodes. De plus, comme les lettres {a, b, c, ...} sont attribuées en fonction du temps d'exécution ('a' pour la plus rapide, ...), on peut en déduire que le temps moyen d'exécution de repetitive_nn est plus important que le temps moyens des autres méthodes.  
+La méthode repetitive_nn est classée 'c', ce qui fait que l'on peut affirmer que le temps moyen d'exécution de cette méthode est différent du temps moyen d'exécution des autres méthodes. De plus, comme les lettres {a, b, c, ...} sont attribuées en fonction du temps d'exécution ('a' pour la plus rapide, ...), on peut en déduire que le temps moyen d'exécution de repetitive_nn est plus important que le temps moyens des autres méthodes.  
   
 Par la même réflexion que celle faite précédemment, nous pouvons remarquer que branch est classé 'b', et a un temps d'exécution moyen plus long que les trois méthodes classées 'a'. Cependant, il a un temps moyen d'exécution inférieur à la méthode repetitive_nn. 
 
@@ -277,7 +281,8 @@ vect_dim <- rep(seqn,times=10)
 temps.lm <- lm(vect_temps~vect_dim)
 summary(temps.lm)
 ```
-Nous pouvons remarquer qu'il y a une relation linéaire entre $\log(temps)²$ et $n$, puisque le test de Fisher ne rejette pas le modèle linéaire. De plus, $R²$ =
+Nous pouvons remarquer qu'il y a une relation linéaire entre $\log(temps)²$ et $n$, puisque le test de Fisher ne rejette pas le modèle linéaire. En effet ce test permet de rejeter le fait que tous les coefficients du modèle sont nuls.  
+De plus, $R²$ =
 
 ```{r, echo=FALSE}
 summary(temps.lm)$r.squared
@@ -289,7 +294,7 @@ $\exists \alpha, \beta$ tels que $\log(temps)²=\alpha*n+\beta$
 soit $\log(temps)=^+_-\sqrt(\alpha*n+\beta)$  
 donc $temps=\exp(^+_-\sqrt(\alpha*n+\beta))$  
   
-On peut donc en déduire que Branch&Bound semble avoir une complexité temporelle en $\exp(n)$.
+On peut en déduire que Branch&Bound semble avoir une complexité temporelle en $\exp(n)$.
 
 ### Analyse de la validité du modèle : 
 
