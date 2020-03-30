@@ -109,7 +109,7 @@ boxplot(cheminRepetitive,cheminNearestIns,chemin2Opt,cheminNearest,cheminBranch,
         cex.axis=0.7299
         )
 ```
-L'affichage sous forme de boxplot nous permet de remarquer que :
+\\L'affichage sous forme de boxplot nous permet de remarquer que :
 
 - la méthode branch renvoie le plus souvent un chemin plus court que les autres méthodes
 - la méthode nearest renvoie le plus souvent un chemin plus long que les autres méthodes
@@ -262,7 +262,7 @@ for (i in 1:number_exec){
 ### Création du modèle linéaire
 Dans un premier temps nous allons créer une matrice temps calculant les temps mis par l'algorithme Branch&Bound pour calculer les chemins hamiltoniens sur un graphe de $n$ sommets généré aléatoirement. Nous réalisons 10 fois l'algorithme sur un graphe à $n$ sommets, et nous faisons varier $n$ de 4 à 20. La matrice obtenue est donc de dimension 17*10.  
   
-A l'aide de ces données, nous pouvons afficher le graphe du temps mis par l'algorithme en fonction du nombre de noeuds du graphe, et le graphe de $\log(temps)²$ en fonction nombre de noeuds du graphe. Cela nous donne les résultats ci-dessous.
+A l'aide de ces données, nous pouvons afficher le graphe du temps mis par l'algorithme en fonction du nombre de noeuds du graphe, et le graphe de $\log(temps)^2$ en fonction nombre de noeuds du graphe. Cela nous donne les résultats ci-dessous.
 
 ```{r, echo=FALSE}
 par(mfrow=c(1,2)) 
@@ -280,7 +280,7 @@ temps.lm <- lm(vect_temps~vect_dim)
 summary(temps.lm)
 ```
 Nous pouvons remarquer qu'il y a une relation linéaire entre $\log(temps)²$ et $n$, puisque le test de Fisher ne rejette pas le modèle linéaire. En effet ce test permet de rejeter le fait que tous les coefficients du modèle sont nuls.  
-De plus, $R²$ =
+De plus, $R^2$ =
 
 ```{r, echo=FALSE}
 summary(temps.lm)$r.squared
@@ -311,20 +311,20 @@ plot(temps.lm)
 ```
  
  
- *Residuals vs Fitted: La courbe n'est pas complètement horizontal. Il y'a donc un léger effet d'échelle. 
+ * Residuals vs Fitted: La courbe n'est pas complètement horizontal. Il y'a donc un léger effet d'échelle. 
  * Normal Q-Q: les points sont proches de la bissectrice, la distribution des résidus est donc similaire à la distribution normale. Nous voyons une légère séparation au niveau des queues des distribution. 
- *Scale Location: cette courbe représente la meme chose que la première seulement avec dles résisu normalisé. On remarque que la courbe est bien honrizontal que le léger effet d'échelle disparait. 
- *Pour la distance de cook nous avons préfére prendre le graphique suivant: Nous voyons qu'aucun résidu a une distance plus grande que 0.05 et que la plus part on une distance inferieure a 0.01. Ceci indique que le bon fit du modèle.
+ * Scale Location: cette courbe représente la meme chose que la première seulement avec dles résisu normalisé. On remarque que la courbe est bien honrizontal que le léger effet d'échelle disparait. 
+ * Pour la distance de cook nous avons préfére prendre le graphique suivant: Nous voyons qu'aucun résidu a une distance plus grande que 0.05 et que la plus part on une distance inferieure a 0.01. Ceci indique que le bon fit du modèle.
  
  
 ```{r, echo=FALSE}
-plot(temps.lm,which=5)
+plot(temps.lm,which=4)
 ```
 
   * Il est aussi possible d'éffectuer un test statistique sur les résidus. En effet s'ils suivent une loi normale ceci indique le bon fit du modèle. 
   * Définissons: 
-    *$(H0)$ les résidus suivent une loi normale
-    *$(H1)$ les résidus ne suivent pas une loi normale
+    * $(H0)$ les résidus suivent une loi normale
+    * $(H1)$ les résidus ne suivent pas une loi normale
   * Pour tester ceci nous pouvons efféctuer un test de shapiro. 
   
 
@@ -376,9 +376,9 @@ plot(temps.lm_moy)
 ```
 
  
- *Residuals vs Fitted: La courbe n'est pas du tou  horizontal. Il y'a donc un important effet d'échelle. 
+ * Residuals vs Fitted: La courbe n'est pas du tou  horizontal. Il y'a donc un important effet d'échelle. 
  * Normal Q-Q: Les distributions sont identiques.
- *Scale Location: L'effet d'échelle disparait. Le nuage de point est sans structure. Ce qui indique la qualité du modèle. 
+ * Scale Location: L'effet d'échelle disparait. Le nuage de point est sans structure. Ce qui indique la qualité du modèle. 
 
   
   * Il est aussi possible d'éffectuer un test statistique sur les résidus. En effet s'ils suivent une loi normale ceci indique le bon fit du modèle. 
@@ -420,7 +420,7 @@ data.graph$dim<-sqrt(data.graph$dim)
 ```
  * D'après nous les variables non pertinentes sont: diameter, mean.dist, sd.dist, mean.long. En effet tous ces variables s'intérèssent seulement aux couts des arretes. Ces derniers n'ont pas d'importance dans le temps de calcul (calculer le chemin avec une arrete de 5 ou dfe 1000 reviens a la meme chose). 
 
- *Ajustement du modèle linéaire de $\log(temps.moy)$ en fonction de toutes les variables présentes. Modèle sans constante. Nous allons d'abord procédé a un test de fisher avec toutes les variables. 
+ * Ajustement du modèle linéaire de $\log(temps.moy)$ en fonction de toutes les variables présentes. Modèle sans constante. Nous allons d'abord procédé a un test de fisher avec toutes les variables. 
 
 ```{r, echo=FALSE}
 model.complete <- lm(log(tps)~., data = data.graph)
@@ -428,6 +428,8 @@ summary(model.complete)
 ```
 * Sois $\alpha = 1\%$
 * Le test de fisher à une $p_{value}$ de $2x10{^-16}$ et nous permet donc de rejeter $H0$ avec un risque de $1\%$.
+
+# Calcul AIC
 * Dans l'étape suivante nous allons procéder au calcul de l'AIC pour les variables de notre modèle. Ceci nous permettera de supprimer les variables non pertinentes.
 ```{r, echo=FALSE}
 (step(model.complete))
@@ -435,16 +437,32 @@ summary(model.complete)
 
 * La variable diameter à été supprimé du modèle. Il reste sd.dist, mean.dist et mean.long, qui nous apparaissent peut pertinente. 
 
+# Test Fisher 
+
 ```{r, echo=FALSE}
 new_model <- lm(formula = log(tps) ~ dim + mean.long + mean.dist + sd.dist + 
     mean.deg + sd.deg, data = data.graph)
 summary(new_model)
 ```
 
-* Sois $\alpha = 1\%$.
- * D'après le test de fishernous pouvons affirmer que le test est pertinent avec un risque de $1\%$ ($p_{value}  =2.2*10^{-16}$). Cependant la $p_{value}$ n'a pas changé en supprimant la variable diameter. 
+ * Sois $\alpha = 1\%$.
+ * D'après le test de fisher nous pouvons affirmer que le test est pertinent avec un risque de $1\%$ ($p_{value}  =2.2*10^{-16}$). Cependant la $p_{value}$ n'a pas changé en supprimant la variable diameter.
+ 
+# Plots
 
-* Nous pouvons aussi analyser les résidus, pour voir si ils suivent une distribution normal, avec le test de Shapiro.
+```{r, echo=FALSE}
+par(mfrow=c(2,2)) 
+plot(new_model)
+```
+
+ * Residuals vs Fitted: La courbe n'est pas  horizontal. Il y'a donc un effet d'échelle. Ceci indique un fit moyen.
+ * Normal Q-Q: Les distributions sont identiques, avec de légère différence sur les queues. 
+ * Scale Location: L'effet d'échelle disparait. Le nuage de point est sans structure. Ce qui indique la qualité du modèle. 
+ * Cook Distance: les points sont a une distance cook faible, ceci indique un bon fit. 
+ 
+# Test Shapiro 
+ * Nous pouvons aussi analyser les résidus, pour voir si ils suivent une distribution normal, avec le test de Shapiro.
+
 
 
 ```{r, echo=FALSE}
@@ -465,13 +483,3 @@ if(shapiroTest_moy$p.value < alpha){
 }
 ```
 On ne peut pas rejetter H0, donc nous pouvons affirmer que les résidus suivent une loi normale. Ce qui indique un modèle pertinent. 
-
-
-Mise en \oe uvre d'une sélection de variables pour ne garder que les variables pertinentes.
-
-Analyse de la validité du modèle : 
-
-  * pertinence des coefficients et du modèle, 
-  
-  * étude des hypothèses sur les résidus.
-
