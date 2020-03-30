@@ -157,9 +157,13 @@ On observe que la $p_{valeur}$ obtenue est strictement inférieure à a. <br/>
 On peut rejeter H0, et affirmer avec un risque de 5% que les chemins hamiltoniens obtenus avec la méthode des plus proches voisins sont en moyenne plus longs que ceux obtenus avec la méthode Branch&Bound.
 
    * tests 2 à 2 
+On souhaite maintenant comparer 2 à 2 les longueurs moyennes des chemins hamiltoniens obtenus par les 5 méthodes vues précédemment.<br/>
+On réalise donc un test sur l'espérance de chaque méthode. <br/>
+Soit i, j deux méthodes différentes .Notre hypothèse nulle (H0) est que la moyenne des chemins hamiltoniens obtenus avec la méthode i est égale à la moyenne des chemins hamiltoniens obtenus avec la méthode j. Notre hypothèse alternative (H1) est que la moyenne des chemins hamiltoniens obtenus avec la méthode i est différente de la moyenne des chemins hamiltoniens obtenus avec la méthode j.<br/>
+(H0) $mi=mj$ <br/>
+(H1) $mi!=mj$ <br/>
 
-Ici (H0) mi=mj
-(H1) mi!=mj
+Nous avons lancé 10 tests simultanés, et obtenus les résulats suivants : <br/>
   
 ```{r, echo=FALSE}
 methodsRepetitive <- vector()
@@ -181,18 +185,16 @@ results<-c(cheminRepetitive, cheminNearestIns, chemin2Opt, cheminNearest, chemin
 #test
 pairwise.t.test(results,methods,adjust.method="bonferroni")
 ```
-A COMMENTER 
-```{r, echo=FALSE}
-?pairwise.t.test
-```
-Si on accepte de se tromper de alpha=5%, on rejette H0 si la pvaleur de (i,j) est inférieure à alpha.
+Nous allons tester si au seuil de 5%, notre hypothèse H0 est vérifiée.<br/> <br/>
 
-On rejette H0: 
-- nearest branch 
-- insertion branch 
-- reptitve nearest
+Si on accepte un risque alpha=5%, on rejette notre hypothèse nulle (H0) si la $p_{valeur}$ obtenue à l'indice [i,j] est inférieure à alpha.<br/> 
+Donc, si la valeur à l'indice [i,j] est inférieure à alpha, nous pouvons affirmer que la moyenne des chemins hamiltoniens obtenus avec la méthode i est différente de celle obtenue avec la méthode j.<br/>
 
-Avec un risque de 5% nous pouvons affirmer que ces méthodes ne sont pas similaires sur la longueur moyenne des chemins calculés
+En appliquant ce principe à nos résultats, nous pouvons dire que :
+  - les méthodes nearest et branch ont des moyennes de chemins calculés différentes
+  - les méthodes nearest_insertion et branch ont des moyennes de chemins calculés différentes   - les méthodes nearest et repetitive_nn ont des moyennes de chemins calculés différentes
+  
+Pour les autres méthodes, nous ne pouvons pas rejeter l'hypothèse d'après laquelle la moyenne des chemins hamiltoniens obtenus avec la méthode i est égale à la moyenne des chemins hamiltoniens obtenus avec la méthode j.
 
 ## 1.2. Temps de calcul
 
