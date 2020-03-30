@@ -27,14 +27,13 @@ library(TSPpackage)
 # fixe la graine
 set.seed(150)
 ```
-Voici le plan de ce qui sera fait dans le TP.
+
 # 0. Visualisation de chemins
 
 Lecture du fichier des villes :
 
 ```{r, echo=FALSE}
 villes <- read.csv('DonneesGPSvilles.csv',header=TRUE,dec='.',sep=';',quote="\"")
-str(villes)
 ```
 Représentation des chemins par plus proches voisins et du chemin optimal :
 ```{r, echo=TRUE}
@@ -113,10 +112,10 @@ boxplot(cheminRepetitive,cheminNearestIns,chemin2Opt,cheminNearest,cheminBranch,
 
 L'affichage sous forme de boxplot nous permet de remarquer que :
 
-- la méthode branch renvoie le plus souvent un chemin plus court que les autres méthodes
-- la méthode nearest renvoie le plus souvent un chemin plus long que les autres méthodes
-- la boîte de la méthode repetitive_nn est moins étendue que les boîtes obtenues par les autres méthodes, ce qui nous permet de constater que 50% des valeurs sont très proches de la valeur médiane
-- la boîte de la méthode nearest_insertion est plus étendue que les boîtes obtenues par les autres méthodes, ce qui nous permet de constater que 50% des valeurs sont assez étendues autour de la valeur médiane   
+- la méthode \texttt{branch} renvoie le plus souvent un chemin plus court que les autres méthodes
+- la méthode \texttt{nearest} renvoie le plus souvent un chemin plus long que les autres méthodes
+- la boîte de la méthode \texttt{repetitive\_nn} est moins étendue que les boîtes obtenues par les autres méthodes, ce qui nous permet de constater que 50% des valeurs sont très proches de la valeur médiane
+- la boîte de la méthode  \texttt{nearest\_insertion} est plus étendue que les boîtes obtenues par les autres méthodes, ce qui nous permet de constater que 50% des valeurs sont assez étendues autour de la valeur médiane   
     
 L'affichage obtenu est assez cohérent puisqu'aucune méthode n'a de valeur médiane complètement absurde par rapport aux autre méthodes.
 
@@ -163,10 +162,10 @@ On peut rejeter H0, et affirmer avec un risque de 5% que la moyenne des chemins 
 On souhaite maintenant comparer 2 à 2 les longueurs moyennes des chemins hamiltoniens obtenus par les 5 méthodes vues précédemment.  
   
 On réalise donc un test sur l'espérance de chaque méthode.   
-Soit i, j deux méthodes différentes .Notre hypothèse nulle (H0) est que la moyenne des chemins hamiltoniens obtenus avec la méthode i est égale à la moyenne des chemins hamiltoniens obtenus avec la méthode j. Notre hypothèse alternative (H1) est que la moyenne des chemins hamiltoniens obtenus avec la méthode i est différente de la moyenne des chemins hamiltoniens obtenus avec la méthode j.  
+Soit i, j deux méthodes différentes. Notre hypothèse nulle $(H_0)$ est que la moyenne des chemins hamiltoniens obtenus avec la méthode i est égale à la moyenne des chemins hamiltoniens obtenus avec la méthode j. Notre hypothèse alternative $(H_1)$ est que la moyenne des chemins hamiltoniens obtenus avec la méthode i est différente de la moyenne des chemins hamiltoniens obtenus avec la méthode j.  
   
-$(H_0) mi=mj$   
-$(H_1) mi \neq mj$   
+$(H_0) \ mi=mj$   
+$(H_1) \ mi \neq mj$   
 
 Nous avons lancé 10 tests simultanés, et obtenus les résulats suivants:   
   
@@ -197,8 +196,9 @@ Donc, si la valeur à l'indice [i,j] est inférieure à alpha, nous pouvons affi
 
 En appliquant ce principe à nos résultats, nous pouvons dire que :
 
-- les méthodes nearest et branch ont des moyennes de chemins calculés différentes
-- les méthodes nearest_insertion et branch ont des moyennes de chemins calculés différentes   - les méthodes nearest et repetitive_nn ont des moyennes de chemins calculés différentes
+- les méthodes \texttt{nearest} et \texttt{branch} ont des moyennes de chemins calculés différentes
+- les méthodes \texttt{nearest\_insertion} et \texttt{branch} ont des moyennes de chemins calculés différentes 
+- les méthodes \texttt{nearest} et \texttt{repetitive\_nn} ont des moyennes de chemins calculés différentes
   
 Pour les autres méthodes, nous ne pouvons pas rejeter l'hypothèse d'après laquelle la moyenne des chemins hamiltoniens obtenus avec la méthode i est égale à la moyenne des chemins hamiltoniens obtenus avec la méthode j.
 
@@ -211,10 +211,10 @@ Nous avons utilisé la fonction benchmark pour réaliser des statistiques d'exé
 Nous avons réalisé des tests sur les temps moyens d'exécution de chaque méthode :   
 Soit i, j deux méthodes différentes .Notre hypothèse nulle $H_0$ est que le temps moyen d'exécution de la méthode i est égale au temps moyen d'exécution de la méthode j. Notre hypothèse alternative ($H_1$) est que le temps moyen d'exécution de la méthode i est différent du temps moyen d'exécution de la méthode j.  
 
-$(H_0) mi=mj$   
-$(H_1) mi!=mj$
+$(H_0)\ mi = mj$   
+$(H_1)\ mi \neq mj$
   
-Le résultat de ces tests est représenté par une lettre dans la colonne cld du tableau ci-dessous. Une même lettre est attribuée aux méthodes pour lequelles H0 n'est pas rejetée. Les lettres sont classées par ordre croissant de temps d'exécution, ainsi un algorithme classé 'a' est plus rapide qu'un algoriyhme classé 'b', etc ...  
+Le résultat de ces tests est représenté par une lettre dans la colonne cld du tableau ci-dessous. Une même lettre est attribuée aux méthodes pour lequelles $H_0$ n'est pas rejetée. Les lettres sont classées par ordre croissant de temps d'exécution, ainsi un algorithme classé 'a' est plus rapide qu'un algoriyhme classé 'b', etc ...  
 Deux méthodes ayant des lettres différentes ont donc des temps d'exécution moyens différents.  
 
 ```{r, echo=FALSE}
@@ -227,12 +227,12 @@ microbenchmark(TSPsolve(couts,"repetitive_nn"), TSPsolve(couts,"nearest_insertio
                 }
             )
 ```
-Nous pouvons remarquer que les méthodes nearest_insertion, two_opt et nearest ont des temps d'exécution moyens similaires. Les méthodes sont classées 'a', ce qui montre que ce sont les méthodes les plus rapides des 5 méthodes proposées. De plus, les 3 méthodes ayant le même classement, on ne peut pas rejeter le fait que les temps moyens d'exécution de ces méthode sont équivalents. Il n'a, en tout cas, pas été mis en évidence que ces méthodes avaient des temps d'exécution significativement différents.     
-Les méthodes repetitive_nn et branch ont une durée d'exécution moyenne supérieure aux autres.
+Nous pouvons remarquer que les méthodes \texttt{nearest\_insertion}, \texttt{two\_opt} et \texttt{nearest} ont des temps d'exécution moyens similaires. Les méthodes sont classées 'a', ce qui montre que ce sont les méthodes les plus rapides des 5 méthodes proposées. De plus, les 3 méthodes ayant le même classement, on ne peut pas rejeter le fait que les temps moyens d'exécution de ces méthode sont équivalents. Il n'a, en tout cas, pas été mis en évidence que ces méthodes avaient des temps d'exécution significativement différents.     
+Les méthodes \texttt{repetitive\_nn} et \texttt{branch} ont une durée d'exécution moyenne supérieure aux autres.
   
-La méthode repetitive_nn est classée 'c', ce qui fait que l'on peut affirmer que le temps moyen d'exécution de cette méthode est différent du temps moyen d'exécution des autres méthodes. De plus, comme les lettres {a, b, c, ...} sont attribuées en fonction du temps d'exécution ('a' pour la plus rapide, ...), on peut en déduire que le temps moyen d'exécution de repetitive_nn est plus important que le temps moyens des autres méthodes.  
+La méthode repetitive_nn est classée 'c', ce qui fait que l'on peut affirmer que le temps moyen d'exécution de cette méthode est différent du temps moyen d'exécution des autres méthodes. De plus, comme les lettres {a, b, c, ...} sont attribuées en fonction du temps d'exécution ('a' pour la plus rapide, ...), on peut en déduire que le temps moyen d'exécution de \texttt{repetitive\_nn} est plus important que le temps moyens des autres méthodes.  
   
-Par la même réflexion que celle faite précédemment, nous pouvons remarquer que branch est classé 'b', et a un temps d'exécution moyen plus long que les trois méthodes classées 'a'. Cependant, il a un temps moyen d'exécution inférieur à la méthode repetitive_nn. 
+Par la même réflexion que celle faite précédemment, nous pouvons remarquer que \texttt{branch} est classé 'b', et a un temps d'exécution moyen plus long que les trois méthodes classées 'a'. Cependant, il a un temps moyen d'exécution inférieur à la méthode \texttt{repetitive\_nn}.
 
 # 2. Etude de la complexité de l'algorithme Branch and Bound
 
@@ -271,6 +271,7 @@ par(mfrow=c(1,2))
 matplot(seqn, temps, xlab="n", ylab="temps")
 matplot(seqn, log(temps)^2, xlab="n", ylab=expression(log(temps)^2))
 ```
+
 Le graphe du temps mis par l'algorithme en fonction du nombre de noeuds du graphe semble suivre une courbe exponentielle. Cette hypothèse est soutenue par le 2ème graphe.  
   
 Nous avons ensuite ajusté le modèle linéaire de $\log(temps)^2$ en fonction de $n$, pour en récupérer les principales charactéristiques. Nous avons obtenu le résultat suivant :  
@@ -299,24 +300,38 @@ On peut en déduire que Branch&Bound semble avoir une complexité temporelle en 
 ### Analyse de la validité du modèle : 
 
 Le modèle nous renvoie une fonction de type: $Y = aX + b + \epsilon$. En effet nous avons les paramètres suivants:   
-$a = 14.7$, $b = 68.6$. Il reste donc à savoir si les coéfficients et donc le modèle sont pertinents. Nous allons tous d'abord analyser la pertinence des coefficients puis celle du modèle en géneral.   
- * Sois $\alpha = 5\%$
 
-  * L'analyse de $a$, permet d'établir un premier résultat quantifiant la significativité du modèle. En effet nous allons tester la significativité de $a$ via le test statistique: $(H_0) : a = 0$ contre $(H_1) : a \neq 0$. La p-value de celui-ci ce retrouve dans le tableau summary(temps.lm) et est 
+ *  a =  
+
+```{r, echo=FALSE}
+summary(temps.lm)$coefficients[2]
+```
+
+ *  b = 
+
+```{r, echo=FALSE}
+summary(temps.lm)$coefficients[1]
+```
+
+Il reste donc à savoir si les coéfficients et donc le modèle sont pertinents. Nous allons tous d'abord analyser la pertinence des coefficients puis celle du modèle en géneral.   
+
+ * Soit $\alpha = 5\%$
+
+  * L'analyse de $a$, permet d'établir un premier résultat quantifiant la significativité du modèle. En effet nous allons tester la significativité de $a$ via le test statistique: $(H_0) : a = 0$ contre $(H_1) : a \neq 0$. La $p_{value}$ de celui-ci ce retrouve dans le tableau summary(temps.lm) et est 
   
 ```{r, echo=FALSE}
 summary(temps.lm)$coef[,"Pr(>|t|)"][2]
 ```
   
-   Nous pouvons donc rejeter $H0$  et affirmer avec 5% de risque que $a$ est significatif. 
-  * L'analyse de $b$ est la moins importante. Il nous indique seulement l'importance de l'intercept. Le test statistique est analogique à $a$. Sa p-value est
+   Nous pouvons donc rejeter $H_0$  et affirmer avec 5% de risque que $a$ est significatif. 
+  * L'analyse de $b$ est la moins importante. Il nous indique seulement l'importance de l'intercept. Le test statistique est analogique à $a$. Sa $p_{value}$ est
   
 ```{r, echo=FALSE}
 summary(temps.lm)$coef[,"Pr(>|t|)"][1]
 ```
 
   
-  Nous pouvons donc rejeter $H0$  et affirmer avec 5% de risque que $b$ est significatif.  
+  Nous pouvons donc rejeter $H_0$  et affirmer avec 5% de risque que $b$ est significatif.  
   * Nous pouvons maintenant passer à l'analyse des résidus: 
     * Pour ceci nous allons tous d'abord nous intérésser à plusieurs graphique:
 
@@ -338,8 +353,8 @@ plot(temps.lm,which=4)
 
   * Il est aussi possible d'éffectuer un test statistique sur les résidus. En effet le fait qu'ils suivent une loi normale indique la qualité du modèle. 
   * Définissons: 
-    * $(H0)$ les résidus suivent une loi normale
-    * $(H1)$ les résidus ne suivent pas une loi normale
+    * $(H_0)$ les résidus suivent une loi normale
+    * $(H_1)$ les résidus ne suivent pas une loi normale
   * Pour tester ceci nous pouvons efféctuer un test de shapiro. 
   
 
@@ -381,13 +396,15 @@ summary(temps.lm_moy)
 
 Analyse de la validité du modèle : 
 
-  * $a$ pertinent $p_{value} = $
+  * $a$ pertinent $p-value$ =  
+  
   
 ```{r, echo=FALSE}
 summary(temps.lm_moy)$coef[,"Pr(>|t|)"][2]
 ```
   
-  * $b$ pertinent $p_{value} = $
+  * $b$ pertinent p-value =  
+  
   
 ```{r, echo=FALSE}
 summary(temps.lm_moy)$coef[,"Pr(>|t|)"][1]
