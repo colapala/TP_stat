@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Arch Linux) (preloaded format=pdflatex 2020.3.9)  30 MAR 2020 19:59
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Arch Linux) (preloaded format=pdflatex 2020.3.9)  30 MAR 2020 20:04
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -504,8 +504,7 @@ Package graphics Info: Driver file: pdftex.def on input line 105.
 )
 \Gin@req@height=\dimen129
 \Gin@req@width=\dimen130
-)
-No file TPstat_CR.aux.
+) (./TPstat_CR.aux)
 \openout1 = `TPstat_CR.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 107.
@@ -664,16 +663,191 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) (/usr/share/texmf-dist/tex/latex/microtype/mt-msb.cfg
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 )
-! Undefined control sequence.
-l.110 ...plan de ce qui sera fait dans le TP. \toc
-                                                   \# 0. Visualisation 
-Here is how much of TeX's memory you used:
- 13588 strings out of 492167
- 194187 string characters out of 6131559
- 308529 words of memory out of 5000000
- 17769 multiletter control sequences out of 15000+600000
- 26351 words of font info for 42 fonts, out of 8000000 for 9000
- 1141 hyphenation exceptions out of 8191
- 39i,6n,42p,808b,271s stack positions out of 5000i,500n,10000p,200000b,80000s
+LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 1
+16.
+(/usr/share/texmf-dist/tex/latex/lm/t1lmtt.fd
+File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
+)
+LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <10> not available
+(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 117.
+LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line 
+117.
+(/usr/share/texmf-dist/tex/latex/lm/ts1lmtt.fd
+File: ts1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
+)
+<TPstat_CR_files/figure-latex/unnamed-chunk-2-1.pdf, id=4, 436.63126pt x 220.82
+5pt>
+File: TPstat_CR_files/figure-latex/unnamed-chunk-2-1.pdf Graphic file (type pdf
+)
+<use TPstat_CR_files/figure-latex/unnamed-chunk-2-1.pdf>
+Package pdftex.def Info: TPstat_CR_files/figure-latex/unnamed-chunk-2-1.pdf  us
+ed on input line 148.
+(pdftex.def)             Requested size: 436.63019pt x 220.82445pt.
+[1
 
-!  ==> Fatal error occurred, no output PDF file produced!
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./TPstat_CR_files/figure-l
+atex/unnamed-chunk-2-1.pdf>]
+<TPstat_CR_files/figure-latex/unnamed-chunk-6-1.pdf, id=23, 414.54875pt x 256.9
+6pt>
+File: TPstat_CR_files/figure-latex/unnamed-chunk-6-1.pdf Graphic file (type pdf
+)
+<use TPstat_CR_files/figure-latex/unnamed-chunk-6-1.pdf>
+Package pdftex.def Info: TPstat_CR_files/figure-latex/unnamed-chunk-6-1.pdf  us
+ed on input line 194.
+(pdftex.def)             Requested size: 414.56038pt x 256.9672pt.
+
+Underfull \hbox (badness 1831) in paragraph at lines 194--196
+[] \T1/lmr/m/n/10 (+20) L'affichage
+ []
+
+LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 2
+00.
+(/usr/share/texmf-dist/tex/latex/lm/ts1lmr.fd
+File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
+) [2 <./TPstat_CR_files/figure-latex/unnamed-chunk-6-1.pdf>]
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <10> on input line 235.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <7> on input line 235.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <5> on input line 235.
+[3] [4]
+
+LaTeX Warning: Command \texttwosuperior invalid in math mode on input line 421.
+
+
+
+LaTeX Warning: Command \texttwosuperior invalid in math mode on input line 421.
+
+
+<TPstat_CR_files/figure-latex/unnamed-chunk-14-1.pdf, id=63, 436.63126pt x 255.
+95625pt>
+File: TPstat_CR_files/figure-latex/unnamed-chunk-14-1.pdf Graphic file (type pd
+f)
+<use TPstat_CR_files/figure-latex/unnamed-chunk-14-1.pdf>
+Package pdftex.def Info: TPstat_CR_files/figure-latex/unnamed-chunk-14-1.pdf  u
+sed on input line 424.
+(pdftex.def)             Requested size: 436.63019pt x 255.95561pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 424--428
+[][] \T1/lmr/m/n/10 (+20) Le
+ []
+
+[5 <./TPstat_CR_files/figure-latex/unnamed-chunk-14-1.pdf>]
+
+LaTeX Warning: Command \texttwosuperior invalid in math mode on input line 429.
+
+
+
+LaTeX Warning: Command \texttwosuperior invalid in math mode on input line 429.
+
+
+
+LaTeX Warning: Command \texttwosuperior invalid in math mode on input line 455.
+
+
+
+LaTeX Warning: Command \texttwosuperior invalid in math mode on input line 455.
+
+
+
+LaTeX Warning: Command \texttwosuperior invalid in math mode on input line 458.
+
+
+
+LaTeX Warning: Command \texttwosuperior invalid in math mode on input line 458.
+
+
+
+LaTeX Warning: Command \texttwosuperior invalid in math mode on input line 464.
+
+
+
+LaTeX Warning: Command \texttwosuperior invalid in math mode on input line 464.
+
+
+
+LaTeX Warning: Command \texttwosuperior invalid in math mode on input line 466.
+
+
+
+LaTeX Warning: Command \texttwosuperior invalid in math mode on input line 466.
+
+
+
+LaTeX Warning: Command \texttwosuperior invalid in math mode on input line 469.
+
+
+
+LaTeX Warning: Command \texttwosuperior invalid in math mode on input line 469.
+
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 498--503
+
+ []
+
+[6]
+<TPstat_CR_files/figure-latex/unnamed-chunk-17-1.pdf, id=91, 445.665pt x 289.08
+pt>
+File: TPstat_CR_files/figure-latex/unnamed-chunk-17-1.pdf Graphic file (type pd
+f)
+<use TPstat_CR_files/figure-latex/unnamed-chunk-17-1.pdf>
+Package pdftex.def Info: TPstat_CR_files/figure-latex/unnamed-chunk-17-1.pdf  u
+sed on input line 513.
+(pdftex.def)             Requested size: 445.6707pt x 289.0837pt.
+<TPstat_CR_files/figure-latex/unnamed-chunk-18-1.pdf, id=92, 440.64626pt x 282.
+05376pt>
+File: TPstat_CR_files/figure-latex/unnamed-chunk-18-1.pdf Graphic file (type pd
+f)
+<use TPstat_CR_files/figure-latex/unnamed-chunk-18-1.pdf>
+Package pdftex.def Info: TPstat_CR_files/figure-latex/unnamed-chunk-18-1.pdf  u
+sed on input line 527.
+(pdftex.def)             Requested size: 440.66533pt x 282.06596pt.
+[7 <./TPstat_CR_files/figure-latex/unnamed-chunk-17-1.pdf>] [8 <./TPstat_CR_fil
+es/figure-latex/unnamed-chunk-18-1.pdf>]
+<TPstat_CR_files/figure-latex/unnamed-chunk-23-1.pdf, id=119, 457.71pt x 289.08
+pt>
+File: TPstat_CR_files/figure-latex/unnamed-chunk-23-1.pdf Graphic file (type pd
+f)
+<use TPstat_CR_files/figure-latex/unnamed-chunk-23-1.pdf>
+Package pdftex.def Info: TPstat_CR_files/figure-latex/unnamed-chunk-23-1.pdf  u
+sed on input line 601.
+(pdftex.def)             Requested size: 457.72984pt x 289.09251pt.
+[9 <./TPstat_CR_files/figure-latex/unnamed-chunk-23-1.pdf>] [10] [11]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 819.
+[12]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 819.
+(./TPstat_CR.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 819.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 819.
+ ) 
+Here is how much of TeX's memory you used:
+ 13958 strings out of 492167
+ 201871 string characters out of 6131559
+ 317451 words of memory out of 5000000
+ 17985 multiletter control sequences out of 15000+600000
+ 59367 words of font info for 105 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 39i,6n,42p,1099b,447s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/usr/share/texmf-dist/fo
+nts/enc/dvips/lm/lm-mathex.enc}{/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-mat
+hsy.enc}{/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/usr/share/texmf-d
+ist/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/share/texmf-dist/fonts/enc/dvips/lm/
+lm-ts1.enc}</usr/share/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></usr/share/
+texmf-dist/fonts/type1/public/lm/lmbx12.pfb></usr/share/texmf-dist/fonts/type1/
+public/lm/lmex10.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmmi10.pfb></
+usr/share/texmf-dist/fonts/type1/public/lm/lmmi7.pfb></usr/share/texmf-dist/fon
+ts/type1/public/lm/lmr10.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmr12
+.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmr17.pfb></usr/share/texmf-d
+ist/fonts/type1/public/lm/lmr7.pfb></usr/share/texmf-dist/fonts/type1/public/lm
+/lmri10.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></usr/share
+/texmf-dist/fonts/type1/public/lm/lmsy7.pfb></usr/share/texmf-dist/fonts/type1/
+public/lm/lmtk10.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmtt10.pfb>
+Output written on TPstat_CR.pdf (12 pages, 392574 bytes).
+PDF statistics:
+ 248 PDF objects out of 1000 (max. 8388607)
+ 200 compressed objects within 2 object streams
+ 37 named destinations out of 1000 (max. 500000)
+ 12415 words of extra memory for PDF output out of 14400 (max. 10000000)
+

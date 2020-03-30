@@ -28,7 +28,6 @@ library(TSPpackage)
 set.seed(150)
 ```
 Voici le plan de ce qui sera fait dans le TP.
-\toc
 # 0. Visualisation de chemins
 
 Lecture du fichier des villes :
