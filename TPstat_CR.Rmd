@@ -412,32 +412,30 @@ On ne peut rejetter H0, donc nous pouvons affirmer avec un risque de 5% que les 
 
 ## 2.3. Comportement par rapport à la structure du graphe
 
-Lecture du fichier 'DonneesTSP.csv'.
-
 ```{r, echo=FALSE}
 data.graph <- data.frame(read.csv('DonneesTSP.csv'))
 data.graph$dim<-sqrt(data.graph$dim)
 ```
- * D'après nous les variables non pertinentes sont: diameter, mean.dist, sd.dist, mean.long. En effet tous ces variables s'intérèssent seulement aux couts des arretes. Ces derniers n'ont pas d'importance dans le temps de calcul (calculer le chemin avec une arrete de 5 ou dfe 1000 reviens a la meme chose). 
+ * D'après nous les variables non pertinentes sont: diameter, mean.dist, sd.dist, mean.long. En effet tous ces variables s'intérèssent seulement aux coûts des arrêtes. Ces derniers n'ont pas d'importance dans le temps de calcul (calculer le chemin avec une arrete de 5 ou de 1000 reviens à la même chose). 
 
- * Ajustement du modèle linéaire de $\log(temps.moy)$ en fonction de toutes les variables présentes. Modèle sans constante. Nous allons d'abord procédé a un test de fisher avec toutes les variables. 
+ * Ajustement du modèle linéaire de $\log(temps.moy)$ en fonction de toutes les variables présentes. Modèle sans constante. Nous allons d'abord procéder à un test de fisher avec toutes les variables. 
 
 ```{r, echo=FALSE}
 model.complete <- lm(log(tps)~., data = data.graph)
 summary(model.complete)
 ```
-* Sois $\alpha = 1\%$
+* Soit $\alpha = 1\%$
 * Le test de fisher à une $p_{value}$ de $2x10{^-16}$ et nous permet donc de rejeter $H0$ avec un risque de $1\%$.
 
-# Calcul AIC
+### Calcul AIC
 * Dans l'étape suivante nous allons procéder au calcul de l'AIC pour les variables de notre modèle. Ceci nous permettera de supprimer les variables non pertinentes.
 ```{r, echo=FALSE}
 (step(model.complete))
 ```
 
-* La variable diameter à été supprimé du modèle. Il reste sd.dist, mean.dist et mean.long, qui nous apparaissent peut pertinente. 
+* La variable diameter a été supprimée du modèle. Il reste sd.dist, mean.dist et mean.long, qui nous paraissent peut pertinente. 
 
-# Test Fisher 
+### Test Fisher 
 
 ```{r, echo=FALSE}
 new_model <- lm(formula = log(tps) ~ dim + mean.long + mean.dist + sd.dist + 
@@ -448,22 +446,20 @@ summary(new_model)
  * Sois $\alpha = 1\%$.
  * D'après le test de fisher nous pouvons affirmer que le test est pertinent avec un risque de $1\%$ ($p_{value}  =2.2*10^{-16}$). Cependant la $p_{value}$ n'a pas changé en supprimant la variable diameter.
  
-# Plots
+### Plots
 
 ```{r, echo=FALSE}
 par(mfrow=c(2,2)) 
 plot(new_model)
 ```
 
- * Residuals vs Fitted: La courbe n'est pas  horizontal. Il y'a donc un effet d'échelle. Ceci indique un fit moyen.
- * Normal Q-Q: Les distributions sont identiques, avec de légère différence sur les queues. 
- * Scale Location: L'effet d'échelle disparait. Le nuage de point est sans structure. Ce qui indique la qualité du modèle. 
- * Cook Distance: les points sont a une distance cook faible, ceci indique un bon fit. 
+ * Residuals vs Fitted: La courbe n'est pas horizontale. Il y'a donc un effet d'échelle. Ceci indique un fit moyen.
+ * Normal Q-Q: Les distributions sont identiques, avec de légères différences sur les queues. 
+ * Scale Location: L'effet d'échelle disparaît. Le nuage de points est sans structure. Ce qui indique la qualité du modèle. 
+ * Cook Distance: les points sont à une distance de cook faible, ceci indique un bon fit. 
  
-# Test Shapiro 
- * Nous pouvons aussi analyser les résidus, pour voir si ils suivent une distribution normal, avec le test de Shapiro.
-
-
+### Test Shapiro 
+ * Nous pouvons aussi analyser les résidus, pour voir s'ils suivent une distribution normale, avec le test de Shapiro.
 
 ```{r, echo=FALSE}
 new_model <- lm(formula = log(tps) ~ dim + mean.long + mean.dist + sd.dist + 
@@ -482,4 +478,4 @@ if(shapiroTest_moy$p.value < alpha){
   print("On ne peut pas rejeter H0")
 }
 ```
-On ne peut pas rejetter H0, donc nous pouvons affirmer que les résidus suivent une loi normale. Ce qui indique un modèle pertinent. 
+On ne peut pas rejetter H0, donc nous pouvons affirmer avec un risque de 5% que les résidus suivent une loi normale. Ce qui indique un modèle pertinent. 
